@@ -1,0 +1,10 @@
+.admin-main{
+    width: 80%;
+    min-width: 30vw;
+    height: 84vh;
+    border: medium solid slategrey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden scroll;
+}

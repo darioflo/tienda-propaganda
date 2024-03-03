@@ -1,0 +1,15 @@
+.admin-navbar{
+    width: 100%;
+    height: 15vh;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.cerrar-sesion{
+    width: 7rem;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
