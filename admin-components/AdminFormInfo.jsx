@@ -1,14 +1,9 @@
 import '@/admin-components/admin-components-styles/AdminFormInfo.css'
 import { useState } from 'react';
-
-const estadoInicial = {
-    servicios: '',
-    ayuda: '',
-    sobreNosotros: ''
-}
+import { estadoInicialInfo } from '@/constants/constants';
 
 const AdminFormInfo = () => {
-    const [formularioInfo, setFormularioInfo] = useState(estadoInicial);
+    const [formularioInfo, setFormularioInfo] = useState(estadoInicialInfo);
 
     const manejarCambio = (e) => {
         setFormularioInfo({
@@ -20,7 +15,7 @@ const AdminFormInfo = () => {
     const manejarEnvio = (e) => {
         e.preventDefault();
         console.log(formularioInfo);
-        setFormularioInfo(estadoInicial);
+        setFormularioInfo(estadoInicialInfo);
     };
 
     return (

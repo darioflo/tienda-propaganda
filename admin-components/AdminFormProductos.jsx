@@ -1,17 +1,9 @@
 import '@/admin-components/admin-components-styles/AdminFormProductos.css'
 import { useState } from 'react';
-
-const estadoInicial = {
-    nombre: '',
-    descripcion: '',
-    categoria: '',
-    precio: '',
-    cantidad: '',
-    foto: []
-}
+import { estadoInicialProductos } from '@/constants/constants';
 
 const AdminFormProductos = () => {
-    const [formulario, setFormulario] = useState(estadoInicial);
+    const [formulario, setFormulario] = useState(estadoInicialProductos);
 
     const manejarCambio = (e) => {
         setFormulario({
@@ -23,7 +15,7 @@ const AdminFormProductos = () => {
     const manejarEnvio = (e) => {
         e.preventDefault();
         console.log(formulario);
-        setFormulario(estadoInicial);
+        setFormulario(estadoInicialProductos);
     };
 
     return (

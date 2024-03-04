@@ -1,14 +1,9 @@
 import '@/admin-components/admin-components-styles/AdminFormAdministrador.css'
 import { useState } from 'react';
-
-const estadoInicial = {
-    nombre: '',
-    usuario: '',
-    contrasena: ''
-}
+import { estadoInicialAdministrador } from '@/constants/constants';
 
 const AdminFormAdministrador = () => {
-    const [formulario, setFormulario] = useState(estadoInicial);
+    const [formulario, setFormulario] = useState(estadoInicialAdministrador);
 
     const manejarCambio = (e) => {
         setFormulario({
@@ -20,7 +15,7 @@ const AdminFormAdministrador = () => {
     const manejarEnvio = (e) => {
         e.preventDefault();
         console.log(formulario);
-        setFormulario(estadoInicial);
+        setFormulario(estadoInicialAdministrador);
     };
 
     return (
@@ -31,6 +26,7 @@ const AdminFormAdministrador = () => {
             <div className="info">
                 <div className="datos">
                     <input type="text" name="nombre" placeholder="Nombre" value={formulario.nombre} onChange={manejarCambio} required />
+                    <input type="text" name="tienda" placeholder="Tienda a gestionar" value={formulario.tienda} onChange={manejarCambio} required />
                     <input type="text" name="usuario" placeholder="Usuario" value={formulario.usuario} onChange={manejarCambio} required />
                     <input type="password" name="contrasena" placeholder="Contraseña" value={formulario.contrasena} onChange={manejarCambio} required />
                 </div>

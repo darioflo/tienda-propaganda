@@ -5,6 +5,7 @@
     border: medium solid slategrey;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     overflow: hidden scroll;
+    padding-top: 1rem;
 }

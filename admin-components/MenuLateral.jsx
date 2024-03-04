@@ -8,10 +8,10 @@ export default function MenuLateral() {
     const { cambiarEstadoAdministradores,
         cambiarEstadoVerAdministradores,
         cambiarEstadoTiendas,
-        cambiarEstadoVerTiendas,
         cambiarEstadoInformacion,
         cambiarEstadoMaterial,
-        cambiarEstadoCategoria } = useContext(adminContext)
+        cambiarEstadoCategoria,
+        cambiarEstadoMostrarTiendas } = useContext(adminContext)
 
     return (
         <aside className="menu-lateral">
@@ -20,7 +20,7 @@ export default function MenuLateral() {
                 <div onClick={cambiarEstadoTiendas}>Agregar una tienda</div>
                 <div onClick={cambiarEstadoMaterial}>Agregar material</div>
                 <div onClick={cambiarEstadoCategoria}>Agregar categoría</div>
-                <div onClick={cambiarEstadoVerTiendas}>Ver tiendas disponibles</div>
+                <div onClick={cambiarEstadoMostrarTiendas}>Ver tiendas disponibles</div>
             </details>
             <details className="details-admin">
                 <summary>Administradores</summary>

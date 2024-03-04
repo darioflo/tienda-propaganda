@@ -11,11 +11,19 @@ export default function AdminContext({ children }) {
         setInformacion(false)
         setMaterial(false)
         setCategoria(false)
+        setMostrarTiendas(false)
+        setVerAdministradores(false)
     }
 
     const [verAdministradores, setVerAdministradores] = useState(false) //estado cuya variable manejara el control de la tabla VerAdministradores
     const cambiarEstadoVerAdministradores = () => {
         setVerAdministradores(!verAdministradores)
+        setAdministradores(false)
+        setInformacion(false)
+        setMaterial(false)
+        setCategoria(false)
+        setMostrarTiendas(false)
+        setTiendas(false)
     }
 
     const [tiendas, setTiendas] = useState(false) //estado cuya variable manejara el control del formulario de tiendas
@@ -25,11 +33,19 @@ export default function AdminContext({ children }) {
         setInformacion(false)
         setMaterial(false)
         setCategoria(false)
+        setMostrarTiendas(false)
+        setVerAdministradores(false)
     }
 
-    const [verTiendas, setVerTiendas] = useState(false) //estado cuya variable manejara el control de la tabla VerTiendas
-    const cambiarEstadoVerTiendas = () => {
-        setVerTiendas(!verTiendas)
+    const [mostrarTiendas, setMostrarTiendas] = useState(false) //estado cuya variable manejara el control del formulario de tiendas
+    const cambiarEstadoMostrarTiendas = () => {
+        setMostrarTiendas(!mostrarTiendas)
+        setAdministradores(false)
+        setInformacion(false)
+        setMaterial(false)
+        setCategoria(false)
+        setTiendas(false)
+        setVerAdministradores(false)
     }
 
     const [informacion, setInformacion] = useState(false) //estado cuya variable manejara el control del formulario de los servicios de la empresa
@@ -39,6 +55,8 @@ export default function AdminContext({ children }) {
         setTiendas(false)
         setMaterial(false)
         setCategoria(false)
+        setMostrarTiendas(false)
+        setVerAdministradores(false)
     }
 
     const [material, setMaterial] = useState(false)
@@ -48,6 +66,8 @@ export default function AdminContext({ children }) {
         setTiendas(false)
         setInformacion(false)
         setCategoria(false)
+        setMostrarTiendas(false)
+        setVerAdministradores(false)
     }
 
     const [categoria, setCategoria] = useState(false)
@@ -57,6 +77,8 @@ export default function AdminContext({ children }) {
         setTiendas(false)
         setInformacion(false)
         setMaterial(false)
+        setMostrarTiendas(false)
+        setVerAdministradores(false)
     }
 
     const data = {
@@ -66,14 +88,14 @@ export default function AdminContext({ children }) {
         cambiarEstadoVerAdministradores,
         tiendas,
         cambiarEstadoTiendas,
-        verTiendas,
-        cambiarEstadoVerTiendas,
         informacion,
         cambiarEstadoInformacion,
         material,
         cambiarEstadoMaterial,
         categoria,
-        cambiarEstadoCategoria
+        cambiarEstadoCategoria,
+        mostrarTiendas,
+        cambiarEstadoMostrarTiendas
     }
 
     return <adminContext.Provider value={data}>{children}</adminContext.Provider>

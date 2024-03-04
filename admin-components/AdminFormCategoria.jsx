@@ -1,12 +1,9 @@
 import '@/admin-components/admin-components-styles/AdminFormCategoria.css'
 import { useState } from 'react';
-
-const estadoInicial = {
-    categoria: ''
-}
+import { estadoInicialCategoria } from '@/constants/constants';
 
 const AdminFormCategoria = () => {
-    const [formularioCategoria, setFormularioCategoria] = useState(estadoInicial);
+    const [formularioCategoria, setFormularioCategoria] = useState(estadoInicialCategoria);
 
     const manejarCambio = (e) => {
         setFormularioCategoria({
@@ -18,7 +15,7 @@ const AdminFormCategoria = () => {
     const manejarEnvio = (e) => {
         e.preventDefault();
         console.log(formularioCategoria);
-        setFormularioCategoria(estadoInicial);
+        setFormularioCategoria(estadoInicialCategoria);
     };
 
     return (

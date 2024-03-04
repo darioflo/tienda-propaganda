@@ -1,12 +1,9 @@
 import '@/admin-components/admin-components-styles/AdminFormMaterial.css'
 import { useState } from 'react';
-
-const estadoInicial = {
-    material: ''
-}
+import { estadoInicialMaterial } from '@/constants/constants';
 
 const AdminFormMaterial = () => {
-    const [formularioMaterial, setFormularioMaterial] = useState(estadoInicial);
+    const [formularioMaterial, setFormularioMaterial] = useState(estadoInicialMaterial);
 
     const manejarCambio = (e) => {
         setFormularioMaterial({
@@ -18,7 +15,7 @@ const AdminFormMaterial = () => {
     const manejarEnvio = (e) => {
         e.preventDefault();
         console.log(formularioMaterial);
-        setFormularioMaterial(estadoInicial);
+        setFormularioMaterial(estadoInicialMaterial);
     };
 
     return (
