@@ -34,7 +34,7 @@ const AdminFormTiendas = () => {
 
     return (
         <form onSubmit={manejarEnvio} className='form-tiendas'>
-            <h3>Agregar una Tienda:</h3>
+            <h3>Agregar Tienda:</h3>
             <input type="text" name="nombre" placeholder="Nombre de la tienda" value={formulario.nombre} onChange={manejarCambio} />
             <input type="text" name="administrador" placeholder="Administrador" value={formulario.administrador} onChange={manejarCambio} />
             <input type="text" name="usuario" placeholder="Usuario" value={formulario.usuario} onChange={manejarCambio} />

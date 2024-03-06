@@ -4,6 +4,7 @@
     border: 1px solid #ddd;
     table-layout: fixed;
     border-radius: 1.3rem;
+    font-size: 18px;
 }
 
 .tabla th, .tabla td {
@@ -26,44 +27,53 @@
 .boton-ver,
 .boton-editar,
 .boton-eliminar{
-    width: 2rem;
+    width: 1.5rem;
     cursor: pointer;
     transition: all .3s ease-out;
     border-radius: .3rem;
     padding: 0.2rem;
+    border: none;
+    overflow: hidden;
 }
 
 .boton-ver {
-    background-color: rgb(155, 207, 83);
+    background-color: rgba(45, 45, 45, 0.9);
     color: white;
     margin-right: 10px;
-    border: none;
     outline: none;
 }
 
+
+
 .boton-editar {
-    background-color: rgb(56, 122, 223);
+    background-color: rgba(45, 45, 45, 0.9);
     color: white;
     margin-right: 10px;
-    border: none;
     outline: none;
 }
 
 .boton-ver:hover {
-    background-color: rgba(155, 207, 83,7);
+    background-color: #01e100;
 }
 
 .boton-editar:hover {
-    background-color: rgb(56, 122, 223,.7);
+    background-color: #00ffff;
 }
 
 .boton-eliminar {
-    background-color: rgb(218, 0, 55);
+    background-color: rgba(45, 45, 45, 0.9);
     color: white;
-    border: none;
     outline: none;
 }
 
 .boton-eliminar:hover {
-    background-color: rgba(218, 0, 55,.7);
+    background-color: #e10f00;
+}
+
+.seccion-tabla{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
 }

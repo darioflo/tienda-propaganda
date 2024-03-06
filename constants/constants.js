@@ -100,6 +100,7 @@ export const estadoInicialProductos = {
     nombre: '',
     descripcion: '',
     categoria: '',
+    material: '',
     precio: '',
     cantidad: '',
     foto: []
@@ -113,4 +114,30 @@ export const estadoInicialTiendas = {
     provincia: ''
 }
 
+export const TABLA_ADMIN = {
+    Nombre: '',
+    Tienda: '',
+    Usuario: '',
+    Contraseña: ''
+}
 
+export const TABLA_TIENDAS = {
+    Nombre: '',
+    Administrador: '',
+    Usuario: '',
+    Contraseña: '',
+    Provincia: ''
+}
+
+export const TABLA_PRODUCTOS = {
+    Nombre: '',
+    Categoria: '',
+    Material: '',
+    Precio: '',
+    Cantidad: '',
+}
+
+export const ENDPIONTS = {
+    administradores: 'https://65e79c6453d564627a8f0df0.mockapi.io/tienda/api/administradores',
+    tiendas: 'https://65e79c6453d564627a8f0df0.mockapi.io/tienda/api/tiendas',
+}

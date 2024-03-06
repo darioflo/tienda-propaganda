@@ -1,7 +1,7 @@
-import { Familjen_Grotesk } from "next/font/google";
+import { DM_Sans } from "next/font/google";
 import "./globals.css";
 
-const familjen = Familjen_Grotesk({ subsets: ["latin"], weight: "400" });
+const dmSans = DM_Sans({ subsets: ["latin"], weight: "400" });
 
 export const metadata = {
 	title: "Tienda Virtual Propaganda",
@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
 			<head>
 				<link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css" />
 			</head>
-			<body className={familjen.className}>
+			<body className={dmSans.className}>
 				{children}
 			</body>
 		</html>

@@ -28,9 +28,11 @@ const AdminFormProductos = () => {
                     <input type="text" name="nombre" placeholder="Nombre del producto" onChange={manejarCambio} required />
                     <textarea name="descripcion" placeholder="Descripción" onChange={manejarCambio} required />
                     <input type="text" name="categoria" placeholder="Categoría" onChange={manejarCambio} required />
+                    <input type="text" name="material" placeholder="Material" onChange={manejarCambio} required />
                     <input type="number" step="0.01" name="precio" placeholder="Precio" onChange={manejarCambio} required />
                 </div>
                 <div className="archivos">
+                    <input type="text" name="tienda" placeholder="Tienda" onChange={manejarCambio} required />
                     <input type="number" name="cantidad" placeholder="Cantidad de unidades" onChange={manejarCambio} required />
                     <input type="file" name="foto1" onChange={(e) => setFormulario({ ...formulario, foto: [...formulario.foto, e.target.files[0]] })} required />
                     <input type="file" name="foto2" onChange={(e) => setFormulario({ ...formulario, foto: [...formulario.foto, e.target.files[0]] })} />

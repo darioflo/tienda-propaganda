@@ -9,18 +9,19 @@
     "lint": "next lint"
   },
   "repository": {
-		"type": "git",
-		"url": "git+https://github.com/darioflo/tienda-propaganda.git"
-	},
+    "type": "git",
+    "url": "git+https://github.com/darioflo/tienda-propaganda.git"
+  },
   "bugs": {
-		"url": "https://github.com/darioflo/tienda-propaganda/issues"
-	},
+    "url": "https://github.com/darioflo/tienda-propaganda/issues"
+  },
   "homepage": "https://github.com/darioflo/tienda-propaganda#readme",
   "dependencies": {
+    "dotenv": "^16.4.5",
     "next": "14.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "zustand": "^4.5.1"
+    "react-magic-motion": "^1.1.2"
   },
   "devDependencies": {
     "eslint": "^8",

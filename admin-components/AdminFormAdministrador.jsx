@@ -21,7 +21,7 @@ const AdminFormAdministrador = () => {
     return (
         <form onSubmit={manejarEnvio} className='form-admin'>
             <div className="encabezado">
-                <h3>Agregar un Administrador:</h3>
+                <h3>Agregar Administrador:</h3>
             </div>
             <div className="info">
                 <div className="datos">

@@ -7,30 +7,13 @@ import AdminFormProductos from './AdminFormProductos';
 import AdminFormAdministrador from './AdminFormAdministrador';
 import AdminFormMaterial from './AdminFormMaterial';
 import AdminFormCategoria from './AdminFormCategoria';
-import { estadoInicialAdministrador, estadoInicialTiendas } from '@/constants/constants';
+import { TABLA_ADMIN, TABLA_TIENDAS, estadoInicialTiendas, estadoInicialCategoria, estadoInicialMaterial } from '@/constants/constants';
 import Tabla from './Tabla';
+import TablaProductos from './TablaProductos';
+import ProductosPorFiltro from './ProductosPorFiltro';
 
 
 export default function AdminMain() {
-
-    let url = 'https://647b-212-8-250-219.ngrok-free.app/shop/shops'
-
-    const funcion = async () => {
-        try {
-            let res = await fetch(url)
-            let json = await res.json()
-
-            console.log(json);
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    useEffect(() => {
-        console.log(funcion());
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [url])
-
 
     const { administradores,
         tiendas,
@@ -38,7 +21,11 @@ export default function AdminMain() {
         categoria,
         material,
         mostrarTiendas,
-        verAdministradores } = useContext(adminContext)
+        verAdministradores,
+        productos,
+        productosTienda,
+        productosMaterial,
+        productosCategoria } = useContext(adminContext)
 
     return (
         <section className='admin-main'>
@@ -47,8 +34,13 @@ export default function AdminMain() {
             {informacion && <AdminFormInfo />}
             {material && <AdminFormMaterial />}
             {categoria && <AdminFormCategoria />}
-            {mostrarTiendas && <Tabla thead={estadoInicialTiendas} />}
-            {verAdministradores && <Tabla thead={estadoInicialAdministrador} />}
+            {mostrarTiendas && <Tabla thead={TABLA_TIENDAS} />}
+            {verAdministradores && <Tabla thead={TABLA_ADMIN} />}
+            {productos && <AdminFormProductos />}
+            {productosTienda && <ProductosPorFiltro option={estadoInicialTiendas} />}
+            {productosCategoria && <ProductosPorFiltro option={estadoInicialCategoria} />}
+            {productosMaterial && <ProductosPorFiltro option={estadoInicialMaterial} />}
+
         </section>
     )
 }
