@@ -110,7 +110,8 @@ export const estadoInicialTiendas = {
     nombre: '',
     administrador: '',
     usuario: '',
-    contraseña: '',
+    contrasena: '',
+    correo: '',
     provincia: ''
 }
 
@@ -138,6 +139,9 @@ export const TABLA_PRODUCTOS = {
 }
 
 export const ENDPIONTS = {
-    administradores: 'https://65e79c6453d564627a8f0df0.mockapi.io/tienda/api/administradores',
-    tiendas: 'https://65e79c6453d564627a8f0df0.mockapi.io/tienda/api/tiendas',
+    tiendas: 'http://172.20.10.3:5000/shop/shops',
+    agregar_tienda: 'http://172.20.10.3:5000/shop/addshop',
+    editar_tienda: 'http://172.20.10.3:5000/shop/editshop/',
+    administradores: 'http://172.20.10.3:5000/shop/adminshops',
+
 }
