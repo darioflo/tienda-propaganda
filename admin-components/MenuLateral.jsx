@@ -5,7 +5,7 @@ import { useContext } from "react"
 
 export default function MenuLateral() {
 
-    const { cambiarEstadoAdministradores,
+    const {
         cambiarEstadoVerAdministradores,
         cambiarEstadoTiendas,
         cambiarEstadoInformacion,
@@ -35,7 +35,6 @@ export default function MenuLateral() {
             </details>
             <details className="details-admin">
                 <summary>Administradores</summary>
-                <div onClick={cambiarEstadoAdministradores}>Agregar un administrador</div>
                 <div onClick={cambiarEstadoVerAdministradores}>Ver administradores</div>
             </details>
             <details className="details-web">

@@ -1,0 +1,17 @@
+.box-accion {
+    width: 200px;
+    height: 100px;
+    color: #fff;
+    background-color: #01e100;
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 999999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-inline: .5rem;
+    border-radius: .5rem;
+    font-size: 15px;
+}

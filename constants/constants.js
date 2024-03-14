@@ -76,6 +76,7 @@ export const Provincias = [{
 }]
 
 export const estadoInicialAdministrador = {
+    id: '',
     nombre: '',
     tienda: '',
     usuario: '',
@@ -107,6 +108,7 @@ export const estadoInicialProductos = {
 }
 
 export const estadoInicialTiendas = {
+    id: '',
     nombre: '',
     administrador: '',
     usuario: '',
@@ -142,6 +144,8 @@ export const ENDPIONTS = {
     tiendas: 'http://172.20.10.3:5000/shop/shops',
     agregar_tienda: 'http://172.20.10.3:5000/shop/addshop',
     editar_tienda: 'http://172.20.10.3:5000/shop/editshop/',
+    borrar_tienda: 'http://172.20.10.3:5000/shop/deleteshop/',
     administradores: 'http://172.20.10.3:5000/shop/adminshops',
+
 
 }
