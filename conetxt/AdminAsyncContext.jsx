@@ -23,13 +23,19 @@ export default function AsyncContext({ children }) {
     }
 
     const [accionCompletada, setAccionCompletada] = useState(false)
+    const [respuesta, setRespuesta] = useState('')
+    const [wasError, setWasError] = useState(false)
 
     const data = {
         borrar,
         setBorrar,
         borrarFila,
         accionCompletada,
-        setAccionCompletada
+        setAccionCompletada,
+        respuesta,
+        setRespuesta,
+        wasError,
+        setWasError
     }
     return <asyncContext.Provider value={data}>{children}</asyncContext.Provider>
 

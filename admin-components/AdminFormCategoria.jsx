@@ -1,6 +1,8 @@
 import '@/admin-components/admin-components-styles/AdminFormCategoria.css'
 import { useState } from 'react';
 import { estadoInicialCategoria } from '@/constants/constants';
+import { useContext } from 'react';
+import { adminContext } from '@/conetxt/AdminContext';
 
 const AdminFormCategoria = () => {
     const [formularioCategoria, setFormularioCategoria] = useState(estadoInicialCategoria);

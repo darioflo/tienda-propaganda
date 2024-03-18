@@ -33,7 +33,7 @@
     border-radius: .3rem;
     padding: 0.2rem;
     border: none;
-    overflow: hidden;
+    position: relative;
 }
 
 .boton-ver {
@@ -43,6 +43,20 @@
     outline: none;
 }
 
+.boton-ver::before{
+    content: 'Ver';
+    width: 6rem;
+    height: 1.5rem;
+    background-color: rgba(45, 45, 45, 0.9);
+    color: #fff;
+    position: absolute;
+    top: -1.2rem;
+    right: 0;
+    opacity: 0;
+    border-radius: .2rem;
+    transition: opacity .2s ease-in;
+    padding: .2rem;
+}
 
 
 .boton-editar {
@@ -52,12 +66,33 @@
     outline: none;
 }
 
+.boton-editar::before{
+    content: 'Editar';
+    width: 6rem;
+    height: 1.5rem;
+    background-color: rgba(45, 45, 45, 0.9);
+    color: #fff;
+    position: absolute;
+    top: -1.2rem;
+    right: 0;
+    opacity: 0;
+    border-radius: .2rem;
+    transition: opacity .2s ease-in;
+    padding: .2rem;
+}
+
 .boton-ver:hover {
     background-color: #01e100;
+}
+.boton-ver:hover::before{
+    opacity: 1;
 }
 
 .boton-editar:hover {
     background-color: #00ffff;
+}
+.boton-editar:hover::before{
+    opacity: 1;
 }
 
 .boton-eliminar {
@@ -66,8 +101,26 @@
     outline: none;
 }
 
+.boton-eliminar::before{
+    content: 'Eliminar';
+    width: 6rem;
+    height: 1.5rem;
+    background-color: rgba(45, 45, 45, 0.9);
+    color: #fff;
+    position: absolute;
+    top: -1.2rem;
+    right: 0;
+    opacity: 0;
+    border-radius: .2rem;
+    transition: opacity .2s ease-in;
+    padding: .2rem;
+}
+
 .boton-eliminar:hover {
     background-color: #e10f00;
+}
+.boton-eliminar:hover::before{
+    opacity: 1;
 }
 
 .seccion-tabla{

@@ -16,7 +16,7 @@ export default function Tabla({ thead }) {
     const [datos, setDatos] = useState([])
     const [cargando, setCargando] = useState(true)
     const { setMostrarTiendas, verAdministradores, setVerAdministradores, contadorEnvios, editarTiendas, setEditarTiendas, editarAdmines, setEditarAdmines } = useContext(adminContext)
-    const { borrar, setBorrar, accionCompletada, setAccionCompletada } = useContext(asyncContext);
+    const { borrar, setBorrar, accionCompletada, setAccionCompletada, respuesta, wasError } = useContext(asyncContext);
     const mostrarFormSegun = thead.hasOwnProperty("Provincia");
     const [datoEliminar, setDatoEliminar] = useState('')
     const [editables, setEditables] = useState({})
@@ -33,6 +33,7 @@ export default function Tabla({ thead }) {
                 const response = await axios.get(`http://172.20.10.3:5000/shop/shopsname/${id}`)
                 console.log(response.data)
                 setEditables(response.data)
+                setRespuesta(response.data)
             } catch (error) {
                 console.log(error);
             }
@@ -45,13 +46,14 @@ export default function Tabla({ thead }) {
                 const response = await axios.get(`http://172.20.10.3:5000/user/user/${id}`)
                 console.log(response.data)
                 setEditables(response.data)
+                setRespuesta(response.data)
             } catch (error) {
                 console.log(error);
             }
         }
     }
 
-    const elegirTabla = (thead) => {
+    const elegirTabla = () => {
         let url
         if (mostrarFormSegun) {
             url = ENDPIONTS.tiendas
@@ -91,9 +93,10 @@ export default function Tabla({ thead }) {
 
     useEffect(() => {
         if (accionCompletada) {
-            setTimeout(() => {
+            const timer = setTimeout(() => {
                 setAccionCompletada(false);
             }, 3000);
+            return () => clearTimeout(timer);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [accionCompletada]);
@@ -193,7 +196,7 @@ export default function Tabla({ thead }) {
     else {
         return (
             <>
-                {accionCompletada && <AccionCompleta />}
+                {accionCompletada && <AccionCompleta respuesta={respuesta} error={wasError} />}
                 {borrar && <BorrarModal borrarDato={datoEliminar} />}
                 <section className='seccion-tabla'>
                     {editarTiendas && <AdminFormTiendas editar={editables} />}

@@ -11,8 +11,8 @@ import AccionCompleta from './AccionCompleta';
 
 const AdminFormTiendas = ({ editar }) => {
 
-    const { setContadorEnvios, contadorEnvios, setEditarTiendas } = useContext(adminContext)
-    const { setAccionCompletada, accionCompletada } = useContext(asyncContext)
+    const { setContadorEnvios, contadorEnvios, setEditarTiendas, setMostrarTiendas } = useContext(adminContext)
+    const { setAccionCompletada, accionCompletada, respuesta, setRespuesta, wasError, setWasError } = useContext(asyncContext)
     const [formulario, setFormulario] = useState(estadoInicialTiendas);
     const [provincia, setProvincia] = useState("")
 
@@ -26,9 +26,10 @@ const AdminFormTiendas = ({ editar }) => {
 
     useEffect(() => {
         if (accionCompletada) {
-            setTimeout(() => {
+            const timer = setTimeout(() => {
                 setAccionCompletada(false);
             }, 3000);
+            return () => clearTimeout(timer);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [accionCompletada]);
@@ -52,43 +53,53 @@ const AdminFormTiendas = ({ editar }) => {
 
     const manejarEnvio = async (e) => {
         e.preventDefault();
-        console.log(formulario);
-
         if (editar) {
             try {
                 const response = await axios.patch(`http://172.20.10.3:5000/shop/editshop/${editar.id}/${editar.usuario}`, formulario);
                 console.log(response.data);
-            } catch (error) {
-                console.error(error);
-            }
+                setAccionCompletada(true)
+                setRespuesta(response.data)
+                setWasError(false)
 
+
+            } catch (error) {
+                console.log(error, error.response.status);
+                if (error.response && error.response === 400) {
+                    setAccionCompletada(true)
+                    setRespuesta(error.response.data)
+                    setWasError(true)
+                }
+            }
             setFormulario(estadoInicialTiendas);
             setProvincia("")
-            setAccionCompletada(true)
             setContadorEnvios(contadorEnvios + 1)
             setEditarTiendas(false)
         }
         else {
             try {
                 const response = await axios.post(ENDPIONTS.agregar_tienda, formulario);
-                console.log(response.data);
                 setAccionCompletada(true)
-            } catch (error) {
-                console.error(error);
-            }
+                setRespuesta(response.data)
+                console.log(response.data);
+                setWasError(false)
 
+            } catch (error) {
+                console.log(error, error.response.status);
+                setAccionCompletada(true)
+                setRespuesta(error.response.data)
+                setWasError(true)
+            }
             setFormulario(estadoInicialTiendas);
             setProvincia("")
-            setAccionCompletada(true)
             setContadorEnvios(contadorEnvios + 1)
+            setMostrarTiendas(true)
         }
-        console.log(formulario);
 
     };
 
     return (
         <>
-            {accionCompletada && <AccionCompleta />}
+            {accionCompletada && <AccionCompleta respuesta={respuesta} error={wasError} />}
             <form onSubmit={manejarEnvio} className='form-tiendas'>
                 <h3>{editar ? 'Editar Tienda:' : 'Agregar Tienda:'}</h3>
                 <input type="text" name="nombre" placeholder="Nombre de la tienda" value={formulario.nombre} onChange={manejarCambio} />

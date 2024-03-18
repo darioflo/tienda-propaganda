@@ -10,11 +10,10 @@ import AccionCompleta from './AccionCompleta';
 const AdminFormAdministrador = ({ editar }) => {
     const [formulario, setFormulario] = useState(estadoInicialAdministrador);
     const { setEditarAdmines, setContadorEnvios, contadorEnvios } = useContext(adminContext)
-    const { setAccionCompletada, accionCompletada } = useContext(asyncContext)
+    const { setAccionCompletada, accionCompletada, respuesta, setRespuesta, wasError, setWasError } = useContext(asyncContext)
 
     useEffect(() => {
         if (editar) {
-            console.log(editar);
             setFormulario(editar);
         } else {
             setFormulario(estadoInicialAdministrador);
@@ -38,12 +37,19 @@ const AdminFormAdministrador = ({ editar }) => {
                 const response = await axios.patch(`http://172.20.10.3:5000/user/updateuser/${editar.id}`, formulario);
                 console.log(response.data);
 
+                setRespuesta(response.data)
+                setWasError(false)
                 setFormulario(estadoInicialAdministrador);
                 setAccionCompletada(true)
                 setContadorEnvios(contadorEnvios + 1)
                 setEditarAdmines(false)
             } catch (error) {
                 console.error(error);
+                if (error.response && error.response === 400) {
+                    setAccionCompletada(true)
+                    setRespuesta(error.response.data)
+                    setWasError(true)
+                }
             }
         }
     };
