@@ -1,5 +1,6 @@
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
+import logo from '@/public/LogoNegativo.png'
 
 const dmSans = DM_Sans({ subsets: ["latin"], weight: "400" });
 
@@ -13,6 +14,8 @@ export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
 			<head>
+				<link rel="icon" href="/LogoNegativo.png" />
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 				<link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css" />
 			</head>
 			<body className={dmSans.className}>

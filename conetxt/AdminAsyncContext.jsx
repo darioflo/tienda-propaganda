@@ -13,7 +13,7 @@ export default function AsyncContext({ children }) {
     const borrarFila = async (dato) => {
         console.log(dato)
         try {
-            const response = await axios.delete(`http://172.20.10.3:5000/shop/deleteshop/${dato}`)
+            const response = await axios.delete(`https://0m9fgs4l-5000.usw3.devtunnels.ms/shop/deleteshop/${dato}`)
             console.log(response.data);
             setContadorEnvios(contadorEnvios + 1)
             setBorrar(false)

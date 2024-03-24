@@ -1,43 +1,43 @@
 .box-accion {
-    width: 200px;
-    height: 100px;
-    color: #fff;
-    background-color: #01e100;
-    position: absolute;
-    bottom: 1rem;
-    right: 1rem;
-    z-index: 999999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    padding-inline: 0.5rem;
-    border-radius: 0.5rem;
-    font-size: 15px;
+  width: 300px;
+  height: 100px;
+  color: #fff;
+  background-color: #01e100;
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 999999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-inline: 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 15px;
 
-    p{
-        margin-left: 2rem;
-    }
+  p {
+    margin-left: 2rem;
+  }
 }
 
 .box-error {
-    width: 200px;
-    height: 100px;
-    color: #fff;
-    background-color: #e10f00;
-    position: absolute;
-    bottom: 1rem;
-    right: 1rem;
-    z-index: 999999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    padding-inline: 0.5rem;
-    border-radius: 0.5rem;
-    font-size: 15px;
+  width: 200px;
+  height: 100px;
+  color: #fff;
+  background-color: #e10f00;
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 999999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-inline: 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 15px;
 
-    p{
-        margin-left: .5rem;
-    }
+  p {
+    margin-left: 0.5rem;
+  }
 }

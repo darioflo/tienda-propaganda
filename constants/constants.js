@@ -84,17 +84,23 @@ export const estadoInicialAdministrador = {
 }
 
 export const estadoInicialCategoria = {
-    categoria: ''
+    categoria: '',
+    tienda: '',
 }
 
 export const estadoInicialInfo = {
+    tienda: '',
     servicios: '',
     ayuda: '',
-    sobreNosotros: ''
+    sobreNosotros: '',
+    correo: '',
+    direccion: '',
+    telefono: '',
 }
 
 export const estadoInicialMaterial = {
-    material: ''
+    material: '',
+    tienda: '',
 }
 
 export const estadoInicialProductos = {
@@ -141,11 +147,14 @@ export const TABLA_PRODUCTOS = {
 }
 
 export const ENDPIONTS = {
-    tiendas: 'http://172.20.10.3:5000/shop/shops',
-    agregar_tienda: 'http://172.20.10.3:5000/shop/addshop',
-    editar_tienda: 'http://172.20.10.3:5000/shop/editshop/',
-    borrar_tienda: 'http://172.20.10.3:5000/shop/deleteshop/',
-    administradores: 'http://172.20.10.3:5000/shop/adminshops',
-
-
+    tiendas: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/shop/shops',
+    agregar_tienda: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/shop/addshop',
+    editar_tienda: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/shop/editshop/',
+    borrar_tienda: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/shop/deleteshop/',
+    administradores: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/shop/adminshops',
+    agregar_categoria: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/category/addcategory',
+    agregar_material: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/material/addmaterial',
+    agregar_informacion: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/information/addinformation',
+    editar_informacion: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/information/editinformation',
+    traer_una_tienda: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/information/editinformation',
 }

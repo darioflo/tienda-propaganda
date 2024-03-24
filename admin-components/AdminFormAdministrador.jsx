@@ -1,6 +1,6 @@
 import '@/admin-components/admin-components-styles/AdminFormAdministrador.css'
 import { useContext, useState, useEffect } from 'react';
-import { estadoInicialAdministrador } from '@/constants/constants';
+import { ENDPIONTS, estadoInicialAdministrador } from '@/constants/constants';
 import { adminContext } from '@/conetxt/AdminContext';
 import { asyncContext } from '@/conetxt/AdminAsyncContext';
 import axios from 'axios';
@@ -34,7 +34,7 @@ const AdminFormAdministrador = ({ editar }) => {
         if (editar) {
             console.log(editar);
             try {
-                const response = await axios.patch(`http://172.20.10.3:5000/user/updateuser/${editar.id}`, formulario);
+                const response = await axios.patch(`${ENDPIONTS.administradores}/${editar.id}`, formulario);
                 console.log(response.data);
 
                 setRespuesta(response.data)
@@ -45,7 +45,7 @@ const AdminFormAdministrador = ({ editar }) => {
                 setEditarAdmines(false)
             } catch (error) {
                 console.error(error);
-                if (error.response && error.response === 400) {
+                if (error.response && error.response.status === 400) {
                     setAccionCompletada(true)
                     setRespuesta(error.response.data)
                     setWasError(true)
@@ -56,7 +56,7 @@ const AdminFormAdministrador = ({ editar }) => {
 
     return (
         <>
-            <form onSubmit={manejarEnvio} className='form-admin'>
+            <form onSubmit={manejarEnvio} className='form-admin animate__animated animate__bounceInDown'>
                 <div className="encabezado">
                     <h3>{editar ? 'Editar administrador' : 'Agregar Administrador:'}</h3>
                 </div>

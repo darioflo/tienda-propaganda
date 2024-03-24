@@ -55,7 +55,7 @@ const AdminFormTiendas = ({ editar }) => {
         e.preventDefault();
         if (editar) {
             try {
-                const response = await axios.patch(`http://172.20.10.3:5000/shop/editshop/${editar.id}/${editar.usuario}`, formulario);
+                const response = await axios.patch(`${ENDPIONTS.editar_tienda}/${editar.id}/${editar.usuario}`, formulario);
                 console.log(response.data);
                 setAccionCompletada(true)
                 setRespuesta(response.data)
@@ -64,7 +64,7 @@ const AdminFormTiendas = ({ editar }) => {
 
             } catch (error) {
                 console.log(error, error.response.status);
-                if (error.response && error.response === 400) {
+                if (error.response && error.response.status === 400) {
                     setAccionCompletada(true)
                     setRespuesta(error.response.data)
                     setWasError(true)
@@ -100,7 +100,7 @@ const AdminFormTiendas = ({ editar }) => {
     return (
         <>
             {accionCompletada && <AccionCompleta respuesta={respuesta} error={wasError} />}
-            <form onSubmit={manejarEnvio} className='form-tiendas'>
+            <form onSubmit={manejarEnvio} className='form-tiendas animate__animated animate__bounceInDown'>
                 <h3>{editar ? 'Editar Tienda:' : 'Agregar Tienda:'}</h3>
                 <input type="text" name="nombre" placeholder="Nombre de la tienda" value={formulario.nombre} onChange={manejarCambio} />
                 <input type="text" name="administrador" placeholder="Administrador" value={formulario.administrador} onChange={manejarCambio} />

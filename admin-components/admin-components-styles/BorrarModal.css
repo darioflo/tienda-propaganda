@@ -61,3 +61,9 @@
     justify-content: center;
     align-items: center;
 }
+
+.resp-text{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

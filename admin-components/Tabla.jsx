@@ -30,7 +30,7 @@ export default function Tabla({ thead }) {
             console.log(id, "entro a tienda");
 
             try {
-                const response = await axios.get(`http://172.20.10.3:5000/shop/shopsname/${id}`)
+                const response = await axios.get(`https://0m9fgs4l-5000.usw3.devtunnels.ms/shop/shopsname/${id}`)
                 console.log(response.data)
                 setEditables(response.data)
                 setRespuesta(response.data)
@@ -43,7 +43,7 @@ export default function Tabla({ thead }) {
             console.log(id, editarAdmines, "entro aki", verAdministradores);
 
             try {
-                const response = await axios.get(`http://172.20.10.3:5000/user/user/${id}`)
+                const response = await axios.get(`https://0m9fgs4l-5000.usw3.devtunnels.ms/user/user/${id}`)
                 console.log(response.data)
                 setEditables(response.data)
                 setRespuesta(response.data)
@@ -202,7 +202,7 @@ export default function Tabla({ thead }) {
                     {editarTiendas && <AdminFormTiendas editar={editables} />}
                     {editarAdmines && <AdminFormAdministrador editar={editables} />}
                     <div style={{ width: '100%', textAlign: "center", padding: '.3rem', fontWeight: 'bold' }}>{thead.hasOwnProperty("Provincia") ? "Tiendas:" : "Administradores:"}</div>
-                    <table className="tabla">
+                    <table className="tabla animate__animated animate__bounceInUp">
                         <thead>
                             <tr>
                                 {datos.length > 0 && Object.keys(datos[0]).map((key, index) =>
