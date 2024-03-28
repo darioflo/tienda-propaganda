@@ -5,6 +5,7 @@
     justify-content: space-between;
     align-items: center;
     background-color: rgb(68, 68, 68);
+    top: 0;
 }
 
 .logo {
@@ -13,6 +14,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 
     img{
         width: auto;
@@ -20,10 +22,54 @@
     }
 }
 
-.cerrar-sesion{
+.menu{
     width: 7rem;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: .5rem;
+
+    div{
+        background-color: transparent;
+        border: none;
+        outline: none;
+        cursor: pointer;
+    }
+}
+
+.hamburguer{
+    display: none;
+}
+
+@media screen and (max-width:790px) {
+    .logo{
+        width: 10rem;
+        height: 100%;
+
+        img{
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .hamburguer{
+        display: block;
+    }
+}
+
+@media screen and (max-width:450px) {
+    .logo{
+        width: 12rem;
+        height: 100%;
+        overflow: hidden;
+
+        img{
+            width: 100px !important;
+            height: 100px !important;
+        }
+    }
+    .menu{
+        padding-inline: .5rem;
+    }
 }

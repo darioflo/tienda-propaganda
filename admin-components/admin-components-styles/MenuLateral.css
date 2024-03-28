@@ -1,6 +1,6 @@
 .menu-lateral {
     width: 20%;
-    min-width: 11rem;
+    min-width: 10.5rem;
     height: 84vh;
     padding: 10px;
     box-sizing: border-box;
@@ -41,17 +41,17 @@
 }
 
 details.details-tienda[open]{
-    height: 7rem;
+    height: auto;
 }
 details.details-products[open]{
-    height: 11rem;
+    height: auto;
 }
 details.details-admin[open]{
-    height: 3.5rem;
+    height: auto;
 }
 
 details.details-web[open]{
-    height: 4rem;
+    height: auto;
 }
 
 .menu-lateral summary {
@@ -66,4 +66,17 @@ details.details-web[open]{
 
 .menu-lateral div:hover{
     background-color: #b4b4b4;
+}
+
+
+@media screen and (max-width:790px) {
+    .menu-lateral{
+        width: 10.5rem;
+    } 
+}
+
+@media screen and (max-width:740px) {
+    .menu-lateral{
+        display: none;
+    }
 }

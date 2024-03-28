@@ -1,7 +1,7 @@
 .admin-app{
     width: 100vw;
     height: 100vh;
-    border: medium solid gray;
+    border: medium solid rgb(68, 68, 68);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -14,4 +14,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+@media  screen and (max-width:740px) {
+    .main{
+        background-color: #fff;
+    }
 }

@@ -78,3 +78,8 @@
 .form-material button:hover {
     background-color: rgb(190, 190, 190);
 }
+@media screen and (max-width:450px){
+    .form-material{
+        width: 20rem;
+    }
+}

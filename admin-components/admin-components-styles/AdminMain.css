@@ -29,3 +29,17 @@
 .admin-main::-webkit-scrollbar-track{
     background-color: rgb(68, 68, 68);
 }
+
+@media  screen and (max-width:740px) {
+    .admin-main{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 0 0 #fff;
+    }
+
+    .admin-main::-webkit-scrollbar-track{
+        background-color: #fff;
+    }
+}

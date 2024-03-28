@@ -34,7 +34,7 @@ const AdminFormAdministrador = ({ editar }) => {
         if (editar) {
             console.log(editar);
             try {
-                const response = await axios.patch(`${ENDPIONTS.administradores}/${editar.id}`, formulario);
+                const response = await axios.patch(`${ENDPIONTS.editar_administradores}/${editar.id}`, formulario);
                 console.log(response.data);
 
                 setRespuesta(response.data)

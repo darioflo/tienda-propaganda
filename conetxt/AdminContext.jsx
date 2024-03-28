@@ -192,6 +192,7 @@ export default function AdminContext({ children }) {
     const [contadorEnvios, setContadorEnvios] = useState(0)
     const [editarTiendas, setEditarTiendas] = useState(false)
     const [editarAdmines, setEditarAdmines] = useState(false)
+    const [hamburgerMenu, setHamburgerMenu] = useState(false)
 
     const data = {
         administradores,
@@ -227,7 +228,9 @@ export default function AdminContext({ children }) {
         editarTiendas,
         setEditarTiendas,
         editarAdmines,
-        setEditarAdmines
+        setEditarAdmines,
+        hamburgerMenu,
+        setHamburgerMenu
     }
 
     return <adminContext.Provider value={data}>{children}</adminContext.Provider>

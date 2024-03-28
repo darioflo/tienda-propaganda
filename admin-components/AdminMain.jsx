@@ -9,7 +9,7 @@ import AdminFormMaterial from './AdminFormMaterial';
 import AdminFormCategoria from './AdminFormCategoria';
 import { TABLA_ADMIN, TABLA_TIENDAS, estadoInicialTiendas, estadoInicialCategoria, estadoInicialMaterial } from '@/constants/constants';
 import Tabla from './Tabla';
-import TablaProductos from './TablaProductos';
+import MenuResponsive from './MenuResponsive';
 import ProductosPorFiltro from './ProductosPorFiltro';
 
 
@@ -25,7 +25,10 @@ export default function AdminMain() {
         productos,
         productosTienda,
         productosMaterial,
-        productosCategoria } = useContext(adminContext)
+        productosCategoria,
+        hamburgerMenu } = useContext(adminContext)
+
+    console.log(hamburgerMenu);
 
     return (
         <section className='admin-main'>
@@ -40,7 +43,7 @@ export default function AdminMain() {
             {productosTienda && <ProductosPorFiltro option={estadoInicialTiendas} />}
             {productosCategoria && <ProductosPorFiltro option={estadoInicialCategoria} />}
             {productosMaterial && <ProductosPorFiltro option={estadoInicialMaterial} />}
-
+            {hamburgerMenu && <MenuResponsive />}
         </section>
     )
 }

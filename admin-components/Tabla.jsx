@@ -16,7 +16,7 @@ export default function Tabla({ thead }) {
     const [datos, setDatos] = useState([])
     const [cargando, setCargando] = useState(true)
     const { setMostrarTiendas, verAdministradores, setVerAdministradores, contadorEnvios, editarTiendas, setEditarTiendas, editarAdmines, setEditarAdmines } = useContext(adminContext)
-    const { borrar, setBorrar, accionCompletada, setAccionCompletada, respuesta, wasError } = useContext(asyncContext);
+    const { borrar, setBorrar, accionCompletada, setAccionCompletada, respuesta, setRespuesta, wasError } = useContext(asyncContext);
     const mostrarFormSegun = thead.hasOwnProperty("Provincia");
     const [datoEliminar, setDatoEliminar] = useState('')
     const [editables, setEditables] = useState({})

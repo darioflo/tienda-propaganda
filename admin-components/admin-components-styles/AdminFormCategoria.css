@@ -77,3 +77,9 @@
 .form-categoria button:hover {
     background-color: rgb(190, 190, 190);
 }
+
+@media screen and (max-width:450px){
+    .form-categoria{
+        width: 20rem;
+    }
+}
