@@ -28,8 +28,6 @@ export default function AdminMain() {
         productosCategoria,
         hamburgerMenu } = useContext(adminContext)
 
-    console.log(hamburgerMenu);
-
     return (
         <section className='admin-main'>
             {tiendas && <AdminFormTiendas />}

@@ -3,12 +3,16 @@ import { useState, useEffect } from 'react';
 import { estadoInicialProductos } from '@/constants/constants';
 import axios from 'axios';
 import { ENDPIONTS } from '@/constants/constants';
+import { asyncContext } from '@/conetxt/AdminAsyncContext';
+import { useContext } from 'react';
+import AccionCompleta from './AccionCompleta';
 
 const AdminFormProductos = () => {
     const [formulario, setFormulario] = useState(estadoInicialProductos);
     const [tiendas, setTiendas] = useState([])
     const [materiales, setMateriales] = useState([]);
     const [categorias, setCategorias] = useState([]);
+    const { accionCompletada, setAccionCompletada, respuesta, setRespuesta, wasError, setWasError } = useContext(asyncContext)
 
     const manejarCambio = (e) => {
         setFormulario({
@@ -28,7 +32,7 @@ const AdminFormProductos = () => {
         Object.keys(formulario).forEach(key => {
             if (key === 'fotos') {
                 formulario[key].forEach((foto, index) => {
-                    datosFormulario.append(`${key}${index + 1}`, foto);
+                    datosFormulario.append(`${key}`, foto);
                 });
             } else {
                 datosFormulario.append(key, formulario[key]);
@@ -41,13 +45,20 @@ const AdminFormProductos = () => {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-            console.log(response.data);
-            console.log(formulario);
+            setAccionCompletada(true)
+            setRespuesta(response.data)
+            setWasError(false)
         } catch (error) {
-            console.log(error);
+            if (error.response && error.response.status === 400) {
+                setAccionCompletada(true)
+                setRespuesta(error.response.data)
+                setWasError(true)
+            }
         }
 
         setFormulario(estadoInicialProductos);
+        let fotos = document.querySelectorAll('input[type="file"]');
+        fotos.forEach((foto) => foto.value = '')
     };
     const getTiendas = async () => {
         try {
@@ -85,39 +96,51 @@ const AdminFormProductos = () => {
     useEffect(() => {
         getTiendas()
     }, [])
+    useEffect(() => {
+        if (accionCompletada) {
+            const timer = setTimeout(() => {
+                setAccionCompletada(false);
+            }, 3000);
+            return () => clearTimeout(timer);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [accionCompletada]);
 
     return (
-        <form onSubmit={manejarEnvio} className='form-productos'>
-            <div className="encabezado">
-                <h3>Agregar un Producto:</h3>
-            </div>
-            <div className="info">
-                <div className="datos">
-                    <input type="text" name="nombre" placeholder="Nombre del producto" value={formulario.nombre} onChange={manejarCambio} required />
-                    <select name="tienda" placeholder="A Tienda" value={formulario.tienda} onChange={manejarCambio}>
-                        <option value='' disabled>{tiendas.length ? "Escoja una Tienda" : "No existen tiendas"}</option>
-                        {tiendas.length ? <option value='all'>Agregar a todas las tiendas</option> : null}
-                        {tiendas.map(tienda => <option key={tienda.id} value={tienda.id}>{tienda.Nombre}</option>)}
-                    </select>
-                    <select name="categoria" value={formulario.categoria} onChange={manejarCambio} required>
-                        <option value='' disabled>Escoja una categoría</option>
-                        {categorias.map((categoria, index) => <option key={index} value={categoria.id}>{categoria.name}</option>)}
-                    </select>
-                    <select name="material" value={formulario.material} onChange={manejarCambio} required>
-                        <option value='' disabled>Escoja un material</option>
-                        {materiales.map((material, index) => <option key={index} value={material.id}>{material.name}</option>)}
-                    </select>
-                    <input type="number" step="0.01" name="precio" value={formulario.precio} placeholder="Precio" onChange={manejarCambio} required />
+        <>
+            {accionCompletada && <AccionCompleta respuesta={respuesta} error={wasError} />}
+            <form onSubmit={manejarEnvio} className='form-productos'>
+                <div className="encabezado">
+                    <h3>Agregar un Producto:</h3>
                 </div>
-                <div className="archivos">
-                    <textarea name="descripcion" placeholder="Descripción" value={formulario.descripcion} onChange={manejarCambio} required />
-                    <input type="number" name="cantidad" placeholder="Cantidad de unidades" value={formulario.cantidad} onChange={manejarCambio} required />
-                    <input type="file" name="fotos" onChange={(e) => setFormulario({ ...formulario, fotos: [...formulario.fotos, e.target.files[0]] })} required />
-                    <input type="file" name="fotos" onChange={(e) => setFormulario({ ...formulario, fotos: [...formulario.fotos, e.target.files[0]] })} />
-                    <input type="file" name="fotos" onChange={(e) => setFormulario({ ...formulario, fotos: [...formulario.fotos, e.target.files[0]] })} />                </div>
-            </div>
-            <button type="submit">Enviar</button>
-        </form>
+                <div className="info">
+                    <div className="datos">
+                        <input type="text" name="nombre" placeholder="Nombre del producto" value={formulario.nombre} onChange={manejarCambio} required />
+                        <select name="tienda" placeholder="A Tienda" value={formulario.tienda} onChange={manejarCambio}>
+                            <option value='' disabled>{tiendas.length ? "Escoja una Tienda" : "No existen tiendas"}</option>
+                            {tiendas.length ? <option value='all'>Agregar a todas las tiendas</option> : null}
+                            {tiendas.map(tienda => <option key={tienda.id} value={tienda.id}>{tienda.Nombre}</option>)}
+                        </select>
+                        <select name="categoria" value={formulario.categoria} onChange={manejarCambio} required>
+                            <option value='' disabled>Escoja una categoría</option>
+                            {categorias.map((categoria, index) => <option key={index} value={categoria._id}>{categoria.name}</option>)}
+                        </select>
+                        <select name="material" value={formulario.material} onChange={manejarCambio} required>
+                            <option value='' disabled>Escoja un material</option>
+                            {materiales.map((material, index) => <option key={index} value={material._id}>{material.name}</option>)}
+                        </select>
+                        <input type="number" step="0.01" name="precio" value={formulario.precio} placeholder="Precio" onChange={manejarCambio} required />
+                    </div>
+                    <div className="archivos">
+                        <textarea name="descripcion" placeholder="Descripción" value={formulario.descripcion} onChange={manejarCambio} required />
+                        <input type="number" name="cantidad" placeholder="Cantidad de unidades" value={formulario.cantidad} onChange={manejarCambio} required />
+                        <input type="file" name="fotos" onChange={(e) => setFormulario({ ...formulario, fotos: [...formulario.fotos, e.target.files[0]] })} required />
+                        <input type="file" name="fotos" onChange={(e) => setFormulario({ ...formulario, fotos: [...formulario.fotos, e.target.files[0]] })} />
+                        <input type="file" name="fotos" onChange={(e) => setFormulario({ ...formulario, fotos: [...formulario.fotos, e.target.files[0]] })} />                </div>
+                </div>
+                <button type="submit">Enviar</button>
+            </form>
+        </>
     );
 };
 
