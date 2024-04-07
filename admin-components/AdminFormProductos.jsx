@@ -7,12 +7,27 @@ import { asyncContext } from '@/conetxt/AdminAsyncContext';
 import { useContext } from 'react';
 import AccionCompleta from './AccionCompleta';
 
-const AdminFormProductos = () => {
+const AdminFormProductos = ({ editables }) => {
     const [formulario, setFormulario] = useState(estadoInicialProductos);
-    const [tiendas, setTiendas] = useState([])
+    const [tiendas, setTiendas] = useState([]);
     const [materiales, setMateriales] = useState([]);
     const [categorias, setCategorias] = useState([]);
     const { accionCompletada, setAccionCompletada, respuesta, setRespuesta, wasError, setWasError } = useContext(asyncContext)
+
+    useEffect(() => {
+        if (editables) {
+            setFormulario(prevState => ({
+                ...prevState,
+                nombre: editables.nombre,
+                precio: editables.precio,
+                cantidad: editables.cantidad,
+                descripcion: editables.descripcion,
+                fotos: []
+            }));
+        }
+    }, [editables]);
+
+    console.log(formulario);
 
     const manejarCambio = (e) => {
         setFormulario({
@@ -63,11 +78,13 @@ const AdminFormProductos = () => {
     const getTiendas = async () => {
         try {
             const respuesta = await axios.get(ENDPIONTS.tiendas)
-            console.log(respuesta.data);
             if (respuesta.data.length === 0) {
                 setFormularioMaterial(prevState => ({ ...prevState, tienda: "No hay tiendas" }));
             }
             setTiendas(respuesta.data)
+            /*if (editables) {
+                setFormulario(prevState => ({ ...prevState, tienda: editables.tienda }));
+            }*/
         } catch (error) {
             console.log(error);
         }
@@ -81,13 +98,12 @@ const AdminFormProductos = () => {
                 axios.get(urlMaterial),
                 axios.get(urlCategoria)
             ]);
-
-            console.log(respuestaMaterial.data);
-            console.log(respuestaCategoria.data);
             setMateriales(respuestaMaterial.data);
             setCategorias(respuestaCategoria.data);
+            /*if (editables) {
+                setFormulario(prevState => ({ ...prevState, categoria: editables.categoria, material: editables.material }));
+            }*/
 
-            // Aquí puedes manejar los datos obtenidos de las respuestas
         } catch (error) {
             console.log(error);
         }
@@ -95,7 +111,9 @@ const AdminFormProductos = () => {
 
     useEffect(() => {
         getTiendas()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
     useEffect(() => {
         if (accionCompletada) {
             const timer = setTimeout(() => {
@@ -111,23 +129,22 @@ const AdminFormProductos = () => {
             {accionCompletada && <AccionCompleta respuesta={respuesta} error={wasError} />}
             <form onSubmit={manejarEnvio} className='form-productos'>
                 <div className="encabezado">
-                    <h3>Agregar un Producto:</h3>
+                    <h3>{editables ? `Editar Producto` : `Agregar Producto`}</h3>
                 </div>
                 <div className="info">
                     <div className="datos">
                         <input type="text" name="nombre" placeholder="Nombre del producto" value={formulario.nombre} onChange={manejarCambio} required />
                         <select name="tienda" placeholder="A Tienda" value={formulario.tienda} onChange={manejarCambio}>
                             <option value='' disabled>{tiendas.length ? "Escoja una Tienda" : "No existen tiendas"}</option>
-                            {tiendas.length ? <option value='all'>Agregar a todas las tiendas</option> : null}
                             {tiendas.map(tienda => <option key={tienda.id} value={tienda.id}>{tienda.Nombre}</option>)}
                         </select>
                         <select name="categoria" value={formulario.categoria} onChange={manejarCambio} required>
-                            <option value='' disabled>Escoja una categoría</option>
-                            {categorias.map((categoria, index) => <option key={index} value={categoria._id}>{categoria.name}</option>)}
+                            <option value='' disabled>{tiendas.length ? "Escoja una categoría" : "No existen categorías"}</option>
+                            {categorias.map((categoria, index) => <option key={index} value={categoria.id}>{categoria.Nombre}</option>)}
                         </select>
                         <select name="material" value={formulario.material} onChange={manejarCambio} required>
-                            <option value='' disabled>Escoja un material</option>
-                            {materiales.map((material, index) => <option key={index} value={material._id}>{material.name}</option>)}
+                            <option value='' disabled>{tiendas.length ? "Escoja un Material" : "No existen materiales"}</option>
+                            {materiales.map((material, index) => <option key={index} value={material.id}>{material.Nombre}</option>)}
                         </select>
                         <input type="number" step="0.01" name="precio" value={formulario.precio} placeholder="Precio" onChange={manejarCambio} required />
                     </div>

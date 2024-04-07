@@ -11,7 +11,7 @@ import AccionCompleta from './AccionCompleta';
 
 const AdminFormTiendas = ({ editar }) => {
 
-    const { setContadorEnvios, contadorEnvios, setEditarTiendas, setMostrarTiendas } = useContext(adminContext)
+    const { setContadorEnvios, contadorEnvios, setEditarTiendas } = useContext(adminContext)
     const { setAccionCompletada, accionCompletada, respuesta, setRespuesta, wasError, setWasError } = useContext(asyncContext)
     const [formulario, setFormulario] = useState(estadoInicialTiendas);
     const [provincia, setProvincia] = useState("")
@@ -92,7 +92,6 @@ const AdminFormTiendas = ({ editar }) => {
             setFormulario(estadoInicialTiendas);
             setProvincia("")
             setContadorEnvios(contadorEnvios + 1)
-            setMostrarTiendas(true)
         }
 
     };

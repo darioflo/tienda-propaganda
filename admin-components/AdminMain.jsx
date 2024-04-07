@@ -11,6 +11,8 @@ import { TABLA_ADMIN, TABLA_TIENDAS, estadoInicialTiendas, estadoInicialCategori
 import Tabla from './Tabla';
 import MenuResponsive from './MenuResponsive';
 import ProductosPorFiltro from './ProductosPorFiltro';
+import { asyncContext } from '@/conetxt/AdminAsyncContext';
+
 
 
 export default function AdminMain() {
@@ -28,8 +30,10 @@ export default function AdminMain() {
         productosCategoria,
         hamburgerMenu } = useContext(adminContext)
 
+
     return (
         <section className='admin-main'>
+            {hamburgerMenu && <MenuResponsive />}
             {tiendas && <AdminFormTiendas />}
             {administradores && <AdminFormAdministrador />}
             {informacion && <AdminFormInfo />}
@@ -41,7 +45,6 @@ export default function AdminMain() {
             {productosTienda && <ProductosPorFiltro option={estadoInicialTiendas} />}
             {productosCategoria && <ProductosPorFiltro option={estadoInicialCategoria} />}
             {productosMaterial && <ProductosPorFiltro option={estadoInicialMaterial} />}
-            {hamburgerMenu && <MenuResponsive />}
         </section>
     )
 }

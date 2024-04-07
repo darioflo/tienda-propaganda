@@ -1,11 +1,12 @@
 import '@/admin-components/admin-components-styles/BorrarModal.css'
 import { useContext } from 'react'
 import { asyncContext } from '@/conetxt/AdminAsyncContext'
+import Loader from '@/admin-components/Loader.jsx';
 
 
 export default function BorrarModal({ borrarDato }) {
 
-    const { setBorrar, borrarFila } = useContext(asyncContext)
+    const { setBorrar, borrarFila, loader } = useContext(asyncContext)
 
     console.log(borrarDato);
 
@@ -17,6 +18,7 @@ export default function BorrarModal({ borrarDato }) {
                 </div>
                 <div className="btns">
                     <button className='delete-btn' onClick={() => borrarFila(borrarDato)}>Aceptar</button>
+                    {loader && <Loader />}
                     <button className='cancel' onClick={() => setBorrar(false)}>Cancelar</button>
                 </div>
             </div>

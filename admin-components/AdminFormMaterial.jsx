@@ -37,7 +37,6 @@ const AdminFormMaterial = () => {
         };
         setFormularioMaterial(estadoInicialMaterial);
     }
-
     const getTiendas = async () => {
         try {
             const respuesta = await axios.get(ENDPIONTS.tiendas)
@@ -52,6 +51,7 @@ const AdminFormMaterial = () => {
     }
     useEffect(() => {
         getTiendas()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {

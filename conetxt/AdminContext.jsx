@@ -216,6 +216,7 @@ export default function AdminContext({ children }) {
         setVerAdministradores,
         cambiarEstadoMostrarTiendas,
         productos,
+        setProductos,
         cambiarEstadoProductos,
         productosTienda,
         cambiarEstadoProductosTienda,

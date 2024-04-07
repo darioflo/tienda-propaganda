@@ -10,21 +10,25 @@ export default function AsyncContext({ children }) {
     const { contadorEnvios, setContadorEnvios } = useContext(adminContext)
 
     const [borrar, setBorrar] = useState(false)
+    const [accionCompletada, setAccionCompletada] = useState(false)
+    const [respuesta, setRespuesta] = useState('')
+    const [wasError, setWasError] = useState(false)
+    const [loader, setLoader] = useState(false)
+    const [paraEditar, setParaEditar] = useState(false)
+
     const borrarFila = async (dato) => {
         console.log(dato)
+        setLoader(true)
         try {
             const response = await axios.delete(`https://0m9fgs4l-5000.usw3.devtunnels.ms/shop/deleteshop/${dato}`)
             console.log(response.data);
             setContadorEnvios(contadorEnvios + 1)
             setBorrar(false)
+            setLoader(false)
         } catch (error) {
             console.log(error);
         }
     }
-
-    const [accionCompletada, setAccionCompletada] = useState(false)
-    const [respuesta, setRespuesta] = useState('')
-    const [wasError, setWasError] = useState(false)
 
     const data = {
         borrar,
@@ -35,7 +39,10 @@ export default function AsyncContext({ children }) {
         respuesta,
         setRespuesta,
         wasError,
-        setWasError
+        setWasError,
+        loader,
+        paraEditar,
+        setParaEditar
     }
     return <asyncContext.Provider value={data}>{children}</asyncContext.Provider>
 

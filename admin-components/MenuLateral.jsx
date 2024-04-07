@@ -26,16 +26,16 @@ export default function MenuLateral() {
                 <div onClick={cambiarEstadoCategoria}>Agregar categoría</div>
                 <div onClick={cambiarEstadoMostrarTiendas}>Ver tiendas disponibles</div>
             </details>
+            <details className="details-admin">
+                <summary>Administradores</summary>
+                <div onClick={cambiarEstadoVerAdministradores}>Ver administradores</div>
+            </details>
             <details className="details-products">
                 <summary>Productos</summary>
                 <div onClick={cambiarEstadoProductos}>Agregar producto</div>
                 <div onClick={cambiarEstadoProductosTienda}>Ver productos por tienda</div>
-                <div onClick={cambiarEstadoProductosCategoria}>Ver productos por categoria</div>
-                <div onClick={cambiarEstadoProductosMaterial}>Ver productos por material</div>
-            </details>
-            <details className="details-admin">
-                <summary>Administradores</summary>
-                <div onClick={cambiarEstadoVerAdministradores}>Ver administradores</div>
+                <div onClick={cambiarEstadoProductosCategoria}>Ver categorias por tienda</div>
+                <div onClick={cambiarEstadoProductosMaterial}>Ver materiales por tienda</div>
             </details>
             <details className="details-web">
                 <summary>Sitio Web</summary>
