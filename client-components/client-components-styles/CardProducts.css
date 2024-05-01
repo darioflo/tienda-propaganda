@@ -1,0 +1,152 @@
+.card-container{
+    width: 18%;
+    min-width: 8rem;
+    height: 25rem;
+    min-height: 10rem;
+    border: thin solid rgb(221,221,221);
+    border-radius: .5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 16px;
+    color: rgb(80,80,80);
+    cursor: pointer;
+    padding: .5rem;
+}
+
+.card-header{
+    width: 100%;
+    height: auto;
+    padding: .3rem;
+}
+
+.card-title{
+    color: rgb(80,80,80);
+}
+
+.img-card{
+    width: 12rem;
+    min-width: 6rem;
+    height: 12rem;
+    padding: .3rem;
+
+    img{
+        width: auto;
+        height: auto;
+    }
+}
+
+.info-card{
+    width: 100%;
+    height: 40%;
+    padding:.5rem;
+}
+
+.buttons-card-product{
+    width: 100%;
+    height: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 1px dotted rgb(160, 160, 160);
+}
+
+.cant{
+    width: 40%;
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    button{
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+    }
+}
+
+.show-cant{
+    width: 3.5rem;
+    height: 1.8rem;
+    background-color: rgb(221,221,221);
+    display: grid;
+    place-items: center;
+}
+
+.cart,
+.fav{
+    width: 30%;
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    button{
+        width: 2rem;
+        height: 2rem;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        border: none;
+        outline: none;
+    }
+}
+
+.fav{
+    border-left: 1px dotted rgb(160, 160, 160);
+}
+
+@media screen and (max-width:115px) {
+    .img-card{
+        width: 4rem;
+        height: 4rem;
+    }
+}
+
+@media screen and (max-width:850px) {
+    .card-container{
+        font-size: 12px;
+        height: 15rem;
+        width: 15rem;
+    }
+
+    .img-card{
+        width: 8rem;
+        height: 8rem;
+    }
+
+    .cart,
+    .fav{
+    width: 30%;
+    height: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    button{
+        width: 1rem;
+        height: 1rem;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        border: none;
+        outline: none;
+    }
+}
+    .buttons-card-product{
+        width: 100%;
+    }
+
+.show-cant{
+    width: 3rem;
+}
+}
+
+@media screen and (max-width:645px) {
+    .card-container{
+        font-size: 12px;
+        height: 15rem;
+        width: 12rem;
+    }
+}

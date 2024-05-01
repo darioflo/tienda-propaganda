@@ -4,6 +4,7 @@ export default function Home() {
 	return (
 		<>
 			<Link href={"/admin"}>Admin</Link>
+			<Link href={'/client'}>Client</Link>
 		</>
 	);
 }

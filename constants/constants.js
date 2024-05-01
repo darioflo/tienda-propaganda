@@ -170,3 +170,6 @@ export const ENDPIONTS = {
     obtener_una_categoria: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/category/category',
 
 }
+
+
+export const PRODUCTOS_CESTA = []

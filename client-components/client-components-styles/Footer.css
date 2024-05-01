@@ -1,0 +1,75 @@
+footer{
+    width: 100%;
+    min-width: 10rem;
+    height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column wrap;
+    background-color: rgb(46, 33, 236);
+    color: #fff;
+}
+
+.footer-content{
+    width: 80%;
+    height: 80%;
+    border-bottom: 2px solid var(--fourth-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: row;
+}
+
+.copyright{
+    width: 80%;
+    height: 5vh;
+    text-align: center;
+    font-family: 'Raleway', sans-serif;
+    margin-top: .5rem;
+}
+
+.logo-negative{
+    height: 90%;
+    width: 33%;
+    text-align: left;
+    padding: 1rem;
+    border-right: 2px solid #fff;
+}
+
+.logo-negative img{
+    width: 80%;
+    height: 80%;
+}
+
+.datos-footer{
+    width: 33%;
+    height: 90%;
+    text-align: left;
+    padding: 1rem;
+    border-right: 2px solid #fff;
+}
+
+.redes{
+    width: 33%;
+    height: 90%;
+    padding: 1rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.redes a{
+    margin-top: .3rem;
+    color: #fff;
+    text-decoration: none;
+}
+
+.enlace-redes{
+    width: auto;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}

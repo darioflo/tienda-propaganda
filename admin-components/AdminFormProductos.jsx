@@ -14,20 +14,7 @@ const AdminFormProductos = ({ editables }) => {
     const [categorias, setCategorias] = useState([]);
     const { accionCompletada, setAccionCompletada, respuesta, setRespuesta, wasError, setWasError } = useContext(asyncContext)
 
-    useEffect(() => {
-        if (editables) {
-            setFormulario(prevState => ({
-                ...prevState,
-                nombre: editables.nombre,
-                precio: editables.precio,
-                cantidad: editables.cantidad,
-                descripcion: editables.descripcion,
-                fotos: []
-            }));
-        }
-    }, [editables]);
-
-    console.log(formulario);
+    console.log(editables);
 
     const manejarCambio = (e) => {
         setFormulario({
@@ -46,7 +33,7 @@ const AdminFormProductos = ({ editables }) => {
         const datosFormulario = new FormData();
         Object.keys(formulario).forEach(key => {
             if (key === 'fotos') {
-                formulario[key].forEach((foto, index) => {
+                formulario[key].forEach((foto) => {
                     datosFormulario.append(`${key}`, foto);
                 });
             } else {
@@ -89,10 +76,12 @@ const AdminFormProductos = ({ editables }) => {
             console.log(error);
         }
     }
-    const obtenerMaterialYCategoria = async (idTienda) => {
+    const obtenerMaterialYCategoria = async (idTienda, ids = {}) => {
         try {
-            const urlMaterial = `https://0m9fgs4l-5000.usw3.devtunnels.ms/material/material/${idTienda}`;
-            const urlCategoria = `https://0m9fgs4l-5000.usw3.devtunnels.ms/category/category/${idTienda}`;
+            const { materialId = idTienda, categoriaId = idTienda } = ids;
+
+            const urlMaterial = `https://0m9fgs4l-5000.usw3.devtunnels.ms/material/material/${materialId}`;
+            const urlCategoria = `https://0m9fgs4l-5000.usw3.devtunnels.ms/category/category/${categoriaId}`;
 
             const [respuestaMaterial, respuestaCategoria] = await Promise.all([
                 axios.get(urlMaterial),
@@ -100,10 +89,6 @@ const AdminFormProductos = ({ editables }) => {
             ]);
             setMateriales(respuestaMaterial.data);
             setCategorias(respuestaCategoria.data);
-            /*if (editables) {
-                setFormulario(prevState => ({ ...prevState, categoria: editables.categoria, material: editables.material }));
-            }*/
-
         } catch (error) {
             console.log(error);
         }
@@ -113,6 +98,36 @@ const AdminFormProductos = ({ editables }) => {
         getTiendas()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    useEffect(() => {
+        if (editables) {
+            setFormulario(prevState => ({
+                ...prevState,
+                nombre: editables.nombre,
+                precio: editables.precio,
+                cantidad: editables.cantidad,
+                descripcion: editables.descripcion,
+                tienda: editables.tienda._id,
+                material: editables.material._id,
+                categoria: editables.categoria._id,
+                fotos: []
+            }));
+            obtenerMaterialYCategoria(editables.tienda._id);
+        }
+    }, [editables]);
+
+    useEffect(() => {
+        if (formulario.tienda) {
+            if (editables) {
+                obtenerMaterialYCategoria(formulario.tienda, {
+                    materialId: editables.material._id,
+                    categoriaId: editables.categoria._id
+                });
+            } else {
+                obtenerMaterialYCategoria(formulario.tienda);
+            }
+        }
+    }, [formulario.tienda, editables]);
 
     useEffect(() => {
         if (accionCompletada) {
