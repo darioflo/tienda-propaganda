@@ -54,7 +54,7 @@
     padding: .5rem;
     cursor: pointer;
     border-radius: .3rem;
-    color: rgb(224, 224, 224);
+    color: #fff;
     background-color: transparent;
     transition: border .3s ease-in;
     border: none;
@@ -91,7 +91,7 @@
 }
 .link-component{
     text-decoration: none;
-    color: rgb(224, 224, 224);
+    color: #fff;
 }
 
 @media screen and (max-width:900px) {

@@ -1,5 +1,5 @@
 import '@/client-components/client-components-styles/UbicacionMenu.css'
-import { context } from '@/conetxt/HeaderContext'
+import { clientContext } from '@/conetxt/ClientContext'
 import { useContext, useState } from 'react'
 
 
@@ -82,7 +82,7 @@ const Provincias = [{
 
 export default function UbicacionMenu() {
 
-    const { mostrarUbicacion, setUbicacionName, cerrarMenuPorFuera } = useContext(context)
+    const { mostrarUbicacion, setUbicacionName, cerrarMenuPorFuera } = useContext(clientContext)
     const [selectedOptionProvincia, setSelectedOptionProvincia] = useState('');
     const [selectedOptionMunicipio, setSelectedOptionMunicipio] = useState('');
     const [isOpen, setIsOpen] = useState(true)

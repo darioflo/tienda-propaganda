@@ -7,11 +7,13 @@ import { ENDPIONTS } from '@/constants/constants';
 import axios from 'axios';
 import AccionCompleta from './AccionCompleta';
 import { useEffect } from 'react';
+import Loader from './Loader';
 
 const AdminFormCategoria = () => {
     const [formularioCategoria, setFormularioCategoria] = useState(estadoInicialCategoria);
     const { accionCompletada, setAccionCompletada, respuesta, setRespuesta, wasError, setWasError } = useContext(asyncContext)
     const [tiendas, setTiendas] = useState([])
+    const [showLoader, setShowLoader] = useState(false)
 
     const manejarCambio = (e) => {
         setFormularioCategoria({
@@ -22,17 +24,20 @@ const AdminFormCategoria = () => {
 
 
     const manejarEnvio = async (e) => {
+        setShowLoader(true)
         e.preventDefault();
         console.log(formularioCategoria);
         try {
             const response = await axios.post(`${ENDPIONTS.agregar_categoria}/${formularioCategoria.tienda}`, formularioCategoria)
             console.log(response.data);
             setAccionCompletada(true)
+            setShowLoader(false)
             setRespuesta(response.data)
             setWasError(false)
         } catch (error) {
-            if (error.response && error.response.status === 400) {
+            if (error.response && error.response.status >= 400) {
                 setAccionCompletada(true)
+                setShowLoader(false)
                 setRespuesta(error.response.data)
                 setWasError(true)
             }
@@ -83,6 +88,9 @@ const AdminFormCategoria = () => {
                             {tiendas.map(tienda => <option key={tienda.id} value={tienda.id}>{tienda.Nombre}</option>)}
                         </select>
                     </div>
+                </div>
+                <div className="loader-form" style={{ display: showLoader ? "flex" : "none" }}>
+                    {showLoader && <Loader />}
                 </div>
                 <button type="submit">Enviar</button>
             </form>

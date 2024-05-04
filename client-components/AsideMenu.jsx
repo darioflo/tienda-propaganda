@@ -1,10 +1,10 @@
 import { useContext } from 'react';
 import "@/client-components/client-components-styles/AsideMenu.css"
-import { context } from '@/conetxt/HeaderContext';
+import { clientContext } from '@/conetxt/ClientContext';
 
 export default function AsideMenu() {
 
-    const { cerrarMenuPorFuera } = useContext(context)
+    const { cerrarMenuPorFuera } = useContext(clientContext)
 
     const stopPropagation = (e) => {
         e.stopPropagation()

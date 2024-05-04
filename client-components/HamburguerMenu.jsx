@@ -1,10 +1,10 @@
 import "@/client-components/client-components-styles/HamburguerMenu.css"
 import { useContext } from 'react'
-import { context } from "@/conetxt/HeaderContext"
+import { clientContext } from "@/conetxt/ClientContext"
 
 export default function HamburguerMenu() {
 
-    const { mostrarMenu } = useContext(context)
+    const { mostrarMenu } = useContext(clientContext)
 
     return (
         <div className="opacity">

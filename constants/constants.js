@@ -105,6 +105,7 @@ export const estadoInicialMaterial = {
 
 export const estadoInicialProductos = {
     nombre: '',
+    id: '',
     descripcion: '',
     tienda: '',
     categoria: '',
@@ -160,15 +161,19 @@ export const ENDPIONTS = {
     agregar_material: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/material/addmaterial',
     agregar_informacion: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/information/addinformation',
     editar_informacion: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/information/editinformation',
+    traerInfoTienda: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/information/information',
     traer_una_tienda: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/shop/shop',
     agregar_producto: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/product/addproduct',
+    editar_producto: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/product/editproduct',
     material_por_tienda: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/material/material',
     categoria_por_tienda: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/category/category',
     producto_por_tienda: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/product/products',
     obtener_un_producto: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/product/product',
     obtener_un_material: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/material/material',
     obtener_una_categoria: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/category/category',
-
+    eliminarProducto: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/product/deleteproduct',
+    eliminarCategoria: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/category/removecategory',
+    eliminarMaterial: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/material/deletematerial',
 }
 
 

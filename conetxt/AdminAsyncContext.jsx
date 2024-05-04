@@ -15,6 +15,8 @@ export default function AsyncContext({ children }) {
     const [wasError, setWasError] = useState(false)
     const [loader, setLoader] = useState(false)
     const [paraEditar, setParaEditar] = useState(false)
+    const [mostrarTabla, setMostrarTabla] = useState(false)
+    const [renderizarProductos, setRenderizarProductos] = useState(0)
 
     const borrarFila = async (dato) => {
         console.log(dato)
@@ -41,8 +43,13 @@ export default function AsyncContext({ children }) {
         wasError,
         setWasError,
         loader,
+        setLoader,
         paraEditar,
-        setParaEditar
+        setParaEditar,
+        mostrarTabla,
+        setMostrarTabla,
+        renderizarProductos,
+        setRenderizarProductos,
     }
     return <asyncContext.Provider value={data}>{children}</asyncContext.Provider>
 

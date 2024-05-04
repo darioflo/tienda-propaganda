@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Home() {
 	return (
 		<>
-			<Link href={"/admin"}>Admin</Link>
+			<Link href={"/superadmin"}>Superadmin</Link>
 			<Link href={'/client'}>Client</Link>
 		</>
 	);

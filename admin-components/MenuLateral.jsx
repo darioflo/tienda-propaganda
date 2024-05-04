@@ -34,12 +34,12 @@ export default function MenuLateral() {
                 <summary>Productos</summary>
                 <div onClick={cambiarEstadoProductos}>Agregar producto</div>
                 <div onClick={cambiarEstadoProductosTienda}>Ver productos por tienda</div>
-                <div onClick={cambiarEstadoProductosCategoria}>Ver categorias por tienda</div>
+                <div onClick={cambiarEstadoProductosCategoria}>Ver categorías por tienda</div>
                 <div onClick={cambiarEstadoProductosMaterial}>Ver materiales por tienda</div>
             </details>
             <details className="details-web">
                 <summary>Sitio Web</summary>
-                <div onClick={cambiarEstadoInformacion}>Informacion</div>
+                <div onClick={cambiarEstadoInformacion}>Información</div>
             </details>
         </aside >
     )

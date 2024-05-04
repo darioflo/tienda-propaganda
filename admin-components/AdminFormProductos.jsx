@@ -6,15 +6,23 @@ import { ENDPIONTS } from '@/constants/constants';
 import { asyncContext } from '@/conetxt/AdminAsyncContext';
 import { useContext } from 'react';
 import AccionCompleta from './AccionCompleta';
+import Loader from './Loader';
 
 const AdminFormProductos = ({ editables }) => {
     const [formulario, setFormulario] = useState(estadoInicialProductos);
     const [tiendas, setTiendas] = useState([]);
     const [materiales, setMateriales] = useState([]);
     const [categorias, setCategorias] = useState([]);
-    const { accionCompletada, setAccionCompletada, respuesta, setRespuesta, wasError, setWasError } = useContext(asyncContext)
-
-    console.log(editables);
+    const [showLoader, setShowLoader] = useState(false)
+    const { accionCompletada,
+        setAccionCompletada,
+        respuesta,
+        setRespuesta,
+        wasError,
+        setWasError,
+        setParaEditar,
+        setRenderizarProductos,
+        renderizarProductos } = useContext(asyncContext)
 
     const manejarCambio = (e) => {
         setFormulario({
@@ -27,6 +35,7 @@ const AdminFormProductos = ({ editables }) => {
     };
 
     const manejarEnvio = async (e) => {
+        setShowLoader(true)
         e.preventDefault();
         console.log(formulario);
 
@@ -42,17 +51,35 @@ const AdminFormProductos = ({ editables }) => {
         });
 
         try {
-            const response = await axios.post(`${ENDPIONTS.agregar_producto}/${formulario.tienda}`, datosFormulario, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            });
+            let response;
+            if (editables) {
+                console.log(editables)
+                console.log(formulario);
+                response = await axios.patch(`${ENDPIONTS.editar_producto}/${formulario.id}`, datosFormulario, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+                console.log(editables)
+                console.log(formulario);
+                console.log(formulario.id);
+                setRenderizarProductos(renderizarProductos + 1)
+            } else {
+                response = await axios.post(`${ENDPIONTS.agregar_producto}/${formulario.tienda}`, datosFormulario, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+            }
             setAccionCompletada(true)
+            setShowLoader(false)
             setRespuesta(response.data)
             setWasError(false)
+            setParaEditar(false)
         } catch (error) {
             if (error.response && error.response.status === 400) {
                 setAccionCompletada(true)
+                setShowLoader(false)
                 setRespuesta(error.response.data)
                 setWasError(true)
             }
@@ -104,6 +131,7 @@ const AdminFormProductos = ({ editables }) => {
             setFormulario(prevState => ({
                 ...prevState,
                 nombre: editables.nombre,
+                id: editables.id,
                 precio: editables.precio,
                 cantidad: editables.cantidad,
                 descripcion: editables.descripcion,
@@ -166,9 +194,12 @@ const AdminFormProductos = ({ editables }) => {
                     <div className="archivos">
                         <textarea name="descripcion" placeholder="Descripción" value={formulario.descripcion} onChange={manejarCambio} required />
                         <input type="number" name="cantidad" placeholder="Cantidad de unidades" value={formulario.cantidad} onChange={manejarCambio} required />
-                        <input type="file" name="fotos" onChange={(e) => setFormulario({ ...formulario, fotos: [...formulario.fotos, e.target.files[0]] })} required />
+                        <input type="file" name="fotos" onChange={(e) => setFormulario({ ...formulario, fotos: [...formulario.fotos, e.target.files[0]] })} />
                         <input type="file" name="fotos" onChange={(e) => setFormulario({ ...formulario, fotos: [...formulario.fotos, e.target.files[0]] })} />
                         <input type="file" name="fotos" onChange={(e) => setFormulario({ ...formulario, fotos: [...formulario.fotos, e.target.files[0]] })} />                </div>
+                </div>
+                <div className="loader-form" style={{ display: showLoader ? "flex" : "none" }}>
+                    {showLoader && <Loader />}
                 </div>
                 <button type="submit">Enviar</button>
             </form>

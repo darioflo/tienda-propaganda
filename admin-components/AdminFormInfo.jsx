@@ -6,12 +6,14 @@ import { estadoInicialInfo } from '@/constants/constants';
 import axios from 'axios';
 import { ENDPIONTS } from '@/constants/constants';
 import AccionCompleta from './AccionCompleta';
+import Loader from './Loader';
 
 const AdminFormInfo = () => {
     const [formularioInfo, setFormularioInfo] = useState(estadoInicialInfo);
     const { accionCompletada, setAccionCompletada, respuesta, setRespuesta, wasError, setWasError } = useContext(asyncContext)
     const [tiendas, setTiendas] = useState([])
     const [mostrarTiendasInfo, setMostrarTiendasInfo] = useState(false)
+    const [showLoader, setShowLoader] = useState(false)
     const [tiendaParaEditar, setTiendaParaEditar] = useState({})
 
 
@@ -34,12 +36,15 @@ const AdminFormInfo = () => {
         console.log(formularioInfo);
         if (mostrarTiendasInfo) {
             try {
-                const response = await axios.patch(`${ENDPIONTS.editar_informacion}/${formularioInfo.tienda}`, formularioInfo)
+                setShowLoader(true)
+                const response = await axios.patch(`${ENDPIONTS.editar_informacion}/${tiendaParaEditar.id}`, formularioInfo)
                 setAccionCompletada(true)
+                setShowLoader(false)
                 setRespuesta(response.data)
                 setWasError(false)
             } catch (error) {
                 if (error.response && error.response.status === 400) {
+                    setShowLoader(false)
                     setAccionCompletada(true)
                     setRespuesta(error.response.data)
                     setWasError(true)
@@ -48,12 +53,15 @@ const AdminFormInfo = () => {
         }
         else {
             try {
+                setShowLoader(true)
                 const response = await axios.post(`${ENDPIONTS.agregar_informacion}/${formularioInfo.tienda}`, formularioInfo)
                 setAccionCompletada(true)
+                setShowLoader(false)
                 setRespuesta(response.data)
                 setWasError(false)
             } catch (error) {
                 if (error.response && error.response.status === 400) {
+
                     setAccionCompletada(true)
                     setRespuesta(error.response.data)
                     setWasError(true)
@@ -65,9 +73,10 @@ const AdminFormInfo = () => {
 
     const getUnaTienda = useCallback(async (idTienda) => {
         try {
-            const response = await axios.get(`${ENDPIONTS.traer_una_tienda}/${idTienda}`);
+            const response = await axios.get(`${ENDPIONTS.traerInfoTienda}/${idTienda}`);
             setFormularioInfo(response.data);
             setTiendaParaEditar(response.data)
+            console.log(tiendaParaEditar);
             console.log(response.data);
         } catch (error) {
             console.log(error);
@@ -140,6 +149,9 @@ const AdminFormInfo = () => {
                         <textarea name="ayuda" placeholder="Información de ayuda" onChange={manejarCambio} value={formularioInfo.ayuda} />
                         <textarea name="sobreNosotros" placeholder="Sobre nosotros" onChange={manejarCambio} value={formularioInfo.sobreNosotros} />
                     </div>
+                </div>
+                <div className="loader-form" style={{ display: showLoader ? "flex" : "none" }}>
+                    {showLoader && <Loader />}
                 </div>
                 <button type="submit">Enviar</button>
             </form>

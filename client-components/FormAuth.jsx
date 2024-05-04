@@ -4,7 +4,6 @@ import { useState } from 'react'
 
 const initialStateLogin = {
     nombre: '',
-    apellidos: '',
     correo: '',
     usuario: '',
     clave: '',
@@ -36,18 +35,13 @@ function FormAuth({ select }) {
     return (
         <form action="" className='form-2' onSubmit={handleSubmit}>
             <div className="title box">
-                <h2 className='login-h2'>Logearse</h2>
+                <h2 className='login-h2'>Crear Perfil</h2>
             </div>
             <div className="inputs box">
                 <input type="text"
                     name="nombre"
                     placeholder='Nombre'
                     value={formAuth.nombre}
-                    onChange={handleChange} />
-                <input type="text"
-                    name="apellidos"
-                    placeholder='Apellidos'
-                    value={formAuth.apellidos}
                     onChange={handleChange} />
                 <input type="email"
                     name="correo"
@@ -74,7 +68,7 @@ function FormAuth({ select }) {
             </div>
             <div className="buttons box">
                 <button type='submit'>Entrar</button>
-                <div className="change-form" onClick={select}>Iniciar sesion</div>
+                <div className="change-form" onClick={select}>Iniciar sesión</div>
                 <button type='button' onClick={handleReset}>Cancelar</button>
             </div>
         </form>

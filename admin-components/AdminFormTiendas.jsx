@@ -8,6 +8,7 @@ import { useContext } from 'react';
 import { adminContext } from '@/conetxt/AdminContext';
 import { asyncContext } from '@/conetxt/AdminAsyncContext';
 import AccionCompleta from './AccionCompleta';
+import Loader from './Loader';
 
 const AdminFormTiendas = ({ editar }) => {
 
@@ -15,6 +16,7 @@ const AdminFormTiendas = ({ editar }) => {
     const { setAccionCompletada, accionCompletada, respuesta, setRespuesta, wasError, setWasError } = useContext(asyncContext)
     const [formulario, setFormulario] = useState(estadoInicialTiendas);
     const [provincia, setProvincia] = useState("")
+    const [showLoader, setShowLoader] = useState(false)
 
     useEffect(() => {
         if (editar) {
@@ -52,19 +54,21 @@ const AdminFormTiendas = ({ editar }) => {
     };
 
     const manejarEnvio = async (e) => {
+        setShowLoader(true)
         e.preventDefault();
         if (editar) {
             try {
                 const response = await axios.patch(`${ENDPIONTS.editar_tienda}/${editar.id}/${editar.usuario}`, formulario);
                 console.log(response.data);
                 setAccionCompletada(true)
+                setShowLoader(false)
                 setRespuesta(response.data)
                 setWasError(false)
 
 
             } catch (error) {
                 console.log(error, error.response.status);
-                if (error.response && error.response.status === 400) {
+                if (error.response && error.response.status >= 400) {
                     setAccionCompletada(true)
                     setRespuesta(error.response.data)
                     setWasError(true)
@@ -79,6 +83,7 @@ const AdminFormTiendas = ({ editar }) => {
             try {
                 const response = await axios.post(ENDPIONTS.agregar_tienda, formulario);
                 setAccionCompletada(true)
+                setShowLoader(false)
                 setRespuesta(response.data)
                 console.log(response.data);
                 setWasError(false)
@@ -110,6 +115,9 @@ const AdminFormTiendas = ({ editar }) => {
                     <option value='' disabled>Escoja una provincia</option>
                     {Provincias.map(provincia => <option key={provincia.id}>{provincia.nombre}</option>)}
                 </select>
+                <div className="loader-form" style={{ display: showLoader ? "flex" : "none" }}>
+                    {showLoader && <Loader />}
+                </div>
                 <button type="submit">Enviar</button>
             </form>
         </>

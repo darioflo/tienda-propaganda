@@ -1,13 +1,13 @@
 'use client'
 import "@/client-components/client-components-styles/HeaderBottom.css"
 import { useContext } from 'react'
-import { context } from "@/conetxt/HeaderContext"
+import { clientContext } from "@/conetxt/ClientContext"
 import Link from 'next/link'
 
 
 export default function HeaderBottom() {
 
-    const { mostrarMenu } = useContext(context)
+    const { mostrarMenu } = useContext(clientContext)
 
     return (
         <nav className="nav-bottom">

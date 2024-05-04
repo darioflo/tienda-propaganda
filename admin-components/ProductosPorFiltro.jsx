@@ -11,10 +11,10 @@ export default function ProductosPorFiltro({ option }) {
     const [tiendaSeleccionada, setTiendaSeleccionada] = useState('');
     const [materialCategoria, setMaterialCategoria] = useState(false)
     const [cargando, setCargando] = useState(false)
-    const [mostrarTabla, setMostrarTabla] = useState(false)
+
     const [datosFiltrados, setDatosFiltrados] = useState([])
 
-    const { setParaEditar } = useContext(asyncContext)
+    const { setParaEditar, mostrarTabla, setMostrarTabla, renderizarProductos } = useContext(asyncContext)
 
     const escogerOpcion = () => {
         let url
@@ -83,6 +83,14 @@ export default function ProductosPorFiltro({ option }) {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [tiendaSeleccionada])
+
+    useEffect(() => {
+        if (tiendaSeleccionada) {
+            getDatos();
+            setParaEditar(false)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [renderizarProductos])
 
     return (
         <div className='componente-por-filtro'>

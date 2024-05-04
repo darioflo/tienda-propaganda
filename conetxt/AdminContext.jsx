@@ -194,6 +194,7 @@ export default function AdminContext({ children }) {
     const [editarAdmines, setEditarAdmines] = useState(false)
     const [hamburgerMenu, setHamburgerMenu] = useState(false)
 
+
     const data = {
         administradores,
         setAdministradores,
