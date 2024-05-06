@@ -169,11 +169,14 @@ export const ENDPIONTS = {
     categoria_por_tienda: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/category/category',
     producto_por_tienda: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/product/products',
     obtener_un_producto: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/product/product',
-    obtener_un_material: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/material/material',
-    obtener_una_categoria: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/category/category',
+    obtener_producto: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/product',
+    obtener_un_material: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/material',
+    obtener_una_categoria: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/category',
     eliminarProducto: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/product/deleteproduct',
     eliminarCategoria: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/category/removecategory',
     eliminarMaterial: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/material/deletematerial',
+    editar_categoria: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/category/editcategory',
+    editar_material: 'https://0m9fgs4l-5000.usw3.devtunnels.ms/material/editmaterial',
 }
 
 

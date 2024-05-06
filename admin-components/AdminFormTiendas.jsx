@@ -30,7 +30,7 @@ const AdminFormTiendas = ({ editar }) => {
         if (accionCompletada) {
             const timer = setTimeout(() => {
                 setAccionCompletada(false);
-            }, 3000);
+            }, 1500);
             return () => clearTimeout(timer);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -106,12 +106,12 @@ const AdminFormTiendas = ({ editar }) => {
             {accionCompletada && <AccionCompleta respuesta={respuesta} error={wasError} />}
             <form onSubmit={manejarEnvio} className='form-tiendas animate__animated animate__bounceInDown'>
                 <h3>{editar ? 'Editar Tienda:' : 'Agregar Tienda:'}</h3>
-                <input type="text" name="nombre" placeholder="Nombre de la tienda" value={formulario.nombre} onChange={manejarCambio} />
-                <input type="text" name="administrador" placeholder="Administrador" value={formulario.administrador} onChange={manejarCambio} />
-                <input type="text" name="usuario" placeholder="Usuario" value={formulario.usuario} onChange={manejarCambio} />
-                <input type="email" name="correo" placeholder="Correo" value={formulario.correo} onChange={manejarCambio} />
-                <input type="password" name="contrasena" placeholder="Contraseña" value={formulario.contrasena} onChange={manejarCambio} />
-                <select name="provincia" placeholder="Provincia" value={formulario ? formulario.provincia : provincia} onChange={manejarCambioProvincia}>
+                <input type="text" name="nombre" placeholder="Nombre de la tienda" value={formulario.nombre} onChange={manejarCambio} required />
+                <input type="text" name="administrador" placeholder="Administrador" value={formulario.administrador} onChange={manejarCambio} required />
+                <input type="text" name="usuario" placeholder="Usuario" value={formulario.usuario} onChange={manejarCambio} required />
+                <input type="email" name="correo" placeholder="Correo" value={formulario.correo} onChange={manejarCambio} required />
+                <input type="password" name="contrasena" placeholder="Contraseña" value={formulario.contrasena} onChange={manejarCambio} required />
+                <select name="provincia" placeholder="Provincia" value={formulario ? formulario.provincia : provincia} onChange={manejarCambioProvincia} required>
                     <option value='' disabled>Escoja una provincia</option>
                     {Provincias.map(provincia => <option key={provincia.id}>{provincia.nombre}</option>)}
                 </select>

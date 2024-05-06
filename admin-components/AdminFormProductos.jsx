@@ -22,7 +22,8 @@ const AdminFormProductos = ({ editables }) => {
         setWasError,
         setParaEditar,
         setRenderizarProductos,
-        renderizarProductos } = useContext(asyncContext)
+        renderizarProductos,
+    } = useContext(asyncContext)
 
     const manejarCambio = (e) => {
         setFormulario({
@@ -64,14 +65,15 @@ const AdminFormProductos = ({ editables }) => {
                 console.log(formulario);
                 console.log(formulario.id);
                 setRenderizarProductos(renderizarProductos + 1)
+
             } else {
                 response = await axios.post(`${ENDPIONTS.agregar_producto}/${formulario.tienda}`, datosFormulario, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
                 });
+                setAccionCompletada(true)
             }
-            setAccionCompletada(true)
             setShowLoader(false)
             setRespuesta(response.data)
             setWasError(false)
@@ -140,8 +142,10 @@ const AdminFormProductos = ({ editables }) => {
                 categoria: editables.categoria._id,
                 fotos: []
             }));
+            console.log(editables.tienda._id);
             obtenerMaterialYCategoria(editables.tienda._id);
         }
+
     }, [editables]);
 
     useEffect(() => {
@@ -161,7 +165,7 @@ const AdminFormProductos = ({ editables }) => {
         if (accionCompletada) {
             const timer = setTimeout(() => {
                 setAccionCompletada(false);
-            }, 3000);
+            }, 1500);
             return () => clearTimeout(timer);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

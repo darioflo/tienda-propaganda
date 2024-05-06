@@ -9,9 +9,16 @@ import AccionCompleta from './AccionCompleta';
 import { useEffect } from 'react';
 import Loader from './Loader';
 
-const AdminFormCategoria = () => {
+const AdminFormCategoria = ({ editables }) => {
     const [formularioCategoria, setFormularioCategoria] = useState(estadoInicialCategoria);
-    const { accionCompletada, setAccionCompletada, respuesta, setRespuesta, wasError, setWasError } = useContext(asyncContext)
+    const { accionCompletada,
+        setAccionCompletada,
+        respuesta,
+        setRespuesta,
+        wasError,
+        setWasError,
+        setRenderizarProductos,
+        renderizarProductos, } = useContext(asyncContext)
     const [tiendas, setTiendas] = useState([])
     const [showLoader, setShowLoader] = useState(false)
 
@@ -27,28 +34,49 @@ const AdminFormCategoria = () => {
         setShowLoader(true)
         e.preventDefault();
         console.log(formularioCategoria);
-        try {
-            const response = await axios.post(`${ENDPIONTS.agregar_categoria}/${formularioCategoria.tienda}`, formularioCategoria)
-            console.log(response.data);
-            setAccionCompletada(true)
-            setShowLoader(false)
-            setRespuesta(response.data)
-            setWasError(false)
-        } catch (error) {
-            if (error.response && error.response.status >= 400) {
+        if (editables) {
+            console.log(formularioCategoria);
+            try {
+                const response = await axios.patch(`${ENDPIONTS.editar_categoria}/${editables.id_category}`, formularioCategoria)
+                console.log(response.data);
                 setAccionCompletada(true)
                 setShowLoader(false)
-                setRespuesta(error.response.data)
-                setWasError(true)
-            }
-        };
+                setRenderizarProductos(renderizarProductos + 1)
+                setRespuesta(response.data)
+                setWasError(false)
+            } catch (error) {
+                if (error.response && error.response.status >= 400) {
+                    setAccionCompletada(true)
+                    setRenderizarProductos(renderizarProductos + 1)
+                    setShowLoader(false)
+                    setRespuesta(error.response.data)
+                    setWasError(true)
+                }
+            };
+        }
+        else {
+            try {
+                const response = await axios.post(`${ENDPIONTS.agregar_categoria}/${formularioCategoria.tienda}`, formularioCategoria)
+                console.log(response.data);
+                setAccionCompletada(true)
+                setShowLoader(false)
+                setRespuesta(response.data)
+                setWasError(false)
+            } catch (error) {
+                if (error.response && error.response.status >= 400) {
+                    setAccionCompletada(true)
+                    setShowLoader(false)
+                    setRespuesta(error.response.data)
+                    setWasError(true)
+                }
+            };
+        }
 
         setFormularioCategoria(estadoInicialCategoria);
     }
     const getTiendas = async () => {
         try {
             const respuesta = await axios.get(ENDPIONTS.tiendas)
-            console.log(respuesta.data);
             if (respuesta.data.length === 0) {
                 setFormularioMaterial(prevState => ({ ...prevState, tienda: "No hay tiendas" }));
             }
@@ -62,10 +90,20 @@ const AdminFormCategoria = () => {
     }, [])
 
     useEffect(() => {
+        if (editables) {
+            setFormularioCategoria(prevState => ({
+                ...prevState,
+                categoria: editables.nombre,
+                tienda: editables.tienda,
+            }))
+        }
+    }, [editables])
+
+    useEffect(() => {
         if (accionCompletada) {
             const timer = setTimeout(() => {
                 setAccionCompletada(false);
-            }, 3000);
+            }, 1500);
             return () => clearTimeout(timer);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -77,7 +115,7 @@ const AdminFormCategoria = () => {
             {accionCompletada && <AccionCompleta respuesta={respuesta} error={wasError} />}
             <form onSubmit={manejarEnvio} className='form-categoria animate__animated animate__bounceInDown'>
                 <div className="encabezado">
-                    <h3>Agregar Categoría:</h3>
+                    <h3>{editables ? 'Editar Categoria' : "Agregar Categoria"}</h3>
                 </div>
                 <div className="categoria">
                     <div className="datos">

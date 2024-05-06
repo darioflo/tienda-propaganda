@@ -8,9 +8,16 @@ import axios from 'axios';
 import AccionCompleta from './AccionCompleta';
 import Loader from './Loader';
 
-const AdminFormMaterial = () => {
+const AdminFormMaterial = ({ editables }) => {
     const [formularioMaterial, setFormularioMaterial] = useState(estadoInicialMaterial);
-    const { accionCompletada, setAccionCompletada, respuesta, setRespuesta, wasError, setWasError } = useContext(asyncContext)
+    const { accionCompletada,
+        setAccionCompletada,
+        respuesta,
+        setRespuesta,
+        wasError,
+        setWasError,
+        setRenderizarProductos,
+        renderizarProductos, } = useContext(asyncContext)
     const [tiendas, setTiendas] = useState([])
     const [showLoader, setShowLoader] = useState(false)
 
@@ -26,20 +33,39 @@ const AdminFormMaterial = () => {
         e.preventDefault();
         console.log(formularioMaterial);
 
-        try {
-            const response = await axios.post(`${ENDPIONTS.agregar_material}/${formularioMaterial.tienda}`, formularioMaterial)
-            setAccionCompletada(true)
-            setShowLoader(false)
-            setRespuesta(response.data)
-            setWasError(false)
-        } catch (error) {
-            if (error.response && error.response.status >= 400) {
+        if (editables) {
+            try {
+                const response = await axios.patch(`${ENDPIONTS.editar_material}/${editables.id_material}`, formularioMaterial)
                 setAccionCompletada(true)
                 setShowLoader(false)
-                setRespuesta(error.response.data)
-                setWasError(true)
-            }
-        };
+                setRespuesta(response.data)
+                setRenderizarProductos(renderizarProductos + 1)
+                setWasError(false)
+            } catch (error) {
+                if (error.response && error.response.status >= 400) {
+                    setAccionCompletada(true)
+                    setShowLoader(false)
+                    setRespuesta(error.response.data)
+                    setWasError(true)
+                }
+            };
+        }
+        else {
+            try {
+                const response = await axios.post(`${ENDPIONTS.agregar_material}/${formularioMaterial.tienda}`, formularioMaterial)
+                setAccionCompletada(true)
+                setShowLoader(false)
+                setRespuesta(response.data)
+                setWasError(false)
+            } catch (error) {
+                if (error.response && error.response.status >= 400) {
+                    setAccionCompletada(true)
+                    setShowLoader(false)
+                    setRespuesta(error.response.data)
+                    setWasError(true)
+                }
+            };
+        }
         setFormularioMaterial(estadoInicialMaterial);
     }
     const getTiendas = async () => {
@@ -60,10 +86,20 @@ const AdminFormMaterial = () => {
     }, [])
 
     useEffect(() => {
+        if (editables) {
+            setFormularioMaterial(prevState => ({
+                ...prevState,
+                material: editables.nombre,
+                tienda: editables.tienda,
+            }))
+        }
+    }, [editables])
+
+    useEffect(() => {
         if (accionCompletada) {
             const timer = setTimeout(() => {
                 setAccionCompletada(false);
-            }, 3000);
+            }, 1500);
             return () => clearTimeout(timer);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -74,7 +110,7 @@ const AdminFormMaterial = () => {
             {accionCompletada && <AccionCompleta respuesta={respuesta} error={wasError} />}
             <form onSubmit={manejarEnvio} className='form-material animate__animated animate__bounceInDown'>
                 <div className="encabezado">
-                    <h3>Agregar Material:</h3>
+                    <h3>{editables ? 'Editar Material:' : 'Agregar Material:'}</h3>
                 </div>
                 <div className="material">
                     <div className="datos">
