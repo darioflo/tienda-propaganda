@@ -5,7 +5,7 @@ import '@/admin-components/admin-components-styles/ProductosPorFiltro.css'
 import TablaPorFiltro from './TablaPorFiltro';
 import { asyncContext } from '@/conetxt/AdminAsyncContext';
 
-export default function ProductosPorFiltro({ option }) {
+export default function ProductosPorFiltro({ option, tiendaAdministrada }) {
 
     const [tiendas, setTiendas] = useState([]);
     const [tiendaSeleccionada, setTiendaSeleccionada] = useState('');
@@ -40,7 +40,7 @@ export default function ProductosPorFiltro({ option }) {
 
     const getDatos = async () => {
         try {
-            let res = await axios.get(`${seleccion}/${tiendaSeleccionada}`)
+            let res = await axios.get(`${seleccion}/${tiendaAdministrada ? tiendaAdministrada.id : tiendaSeleccionada}`)
             setDatosFiltrados(res.data)
             setMostrarTabla(true)
             setCargando(false)
@@ -85,6 +85,14 @@ export default function ProductosPorFiltro({ option }) {
     }, [tiendaSeleccionada])
 
     useEffect(() => {
+        if (tiendaAdministrada) {
+            getDatos();
+            setParaEditar(false)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [tiendaSeleccionada])
+
+    useEffect(() => {
         if (tiendaSeleccionada) {
             getDatos();
             setParaEditar(false)
@@ -96,10 +104,14 @@ export default function ProductosPorFiltro({ option }) {
         <div className='componente-por-filtro'>
             <h3>{`${filtrado} disponibles en tiendas:`}</h3>
             <div className="select">
-                <select name="tienda" value={tiendaSeleccionada} onChange={manejarCambio}>
-                    <option value='' disabled>{tiendas.length ? "Escoja una Tienda" : "No existen tiendas"}</option>
-                    {tiendas.map(tienda => <option key={tienda.id} value={tienda.id}>{tienda.Nombre}</option>)}
-                </select>
+                {tiendaAdministrada
+                    ? <select name="tienda" placeholder="A Tienda" value={tiendaAdministrada.id} onChange={manejarCambio}>
+                        <option value={tiendaAdministrada.id}>{tiendaAdministrada.nombre}</option>
+                    </select>
+                    : <select name="tienda" value={tiendaSeleccionada} onChange={manejarCambio}>
+                        <option value='' disabled>{tiendas.length ? "Escoja una Tienda" : "No existen tiendas"}</option>
+                        {tiendas.map(tienda => <option key={tienda.id} value={tienda.id}>{tienda.Nombre}</option>)}
+                    </select>}
             </div>
             {mostrarTabla && <TablaPorFiltro datos={datosFiltrados} soloNombre={materialCategoria} cargando={cargando} filtro={filtrado} />}
         </div>

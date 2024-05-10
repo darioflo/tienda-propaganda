@@ -1,8 +1,8 @@
 'use client'
 import FormLogin from '@/client-components/FormLogin';
-import { useContext, useState } from 'react';
-import { context } from '@/conetxt/HeaderContext';
+import { useState } from 'react';
 import FormAuth from '@/client-components/FormAuth';
+
 
 export default function User() {
 
@@ -15,7 +15,7 @@ export default function User() {
 
     return (
         <>
-            {formSeleccionado ? <FormAuth select={cambiarEstadoForm} /> : <FormLogin select={cambiarEstadoForm} />}
+            {formSeleccionado ? <FormAuth select={cambiarEstadoForm} /> : <FormLogin select={cambiarEstadoForm} invitado={false} />}
         </>
     )
 }

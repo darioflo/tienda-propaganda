@@ -3,22 +3,21 @@
 import { useState, useEffect } from 'react';
 import '@/client-components/client-components-styles/Pagination.css'
 import CardProducts from './CardProducts';
+import axios from 'axios';
 
 export default function ProductsPagination({ title, url }) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [data, setData] = useState([]);
-    const [isFetching, setIsFetching] = useState(true);
-    const [isError, setIsError] = useState(false);
     const productsPerPage = 5;
 
     async function fetchData() {
         try {
-            const response = await fetch(url);
-            const data = await response.json();
-            setData(data);
-            setIsFetching(false);
+            console.log(url);
+            const response = await axios.get(url);
+            console.log(response.data);
+            setData(response.data);
         } catch (error) {
-            setIsError(true);
+            console.log(error);
         }
     }
 

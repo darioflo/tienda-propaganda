@@ -15,12 +15,12 @@ export default function HeaderTop() {
         <nav className="navbar display">
             <div className="filtros-container display">
                 <div className="logo-back-to-home-nav">
-                    <Link href="/client"><Image className="logo-image-to-home" src="/logo.png" alt="" width={230} height={100} /></Link>
+                    <Link href="/"><Image className="logo-image-to-home" src="/logo.png" alt="" width={230} height={100} /></Link>
                 </div>
-                <button className="btn-filtros display" onClick={showMenuAside}>Buscar por
+                {/*<button className="btn-filtros display" onClick={showMenuAside}>Buscar por
                     <svg xmlns="http://www.w3.org/2000/svg" width="1.3em" height="1.3em" viewBox="0 0 24 24">
                         <path fill="rgb(224, 224, 224)" d="M8.59 16.58L13.17 12L8.59 7.41L10 6l6 6l-6 6z" /></svg>
-                </button>
+                </button>*/}
             </div>
             {asideMenu && <AsideMenu />}
             <div className="buscador-container display">

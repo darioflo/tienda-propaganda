@@ -8,7 +8,7 @@ import axios from 'axios';
 import AccionCompleta from './AccionCompleta';
 import Loader from './Loader';
 
-const AdminFormMaterial = ({ editables }) => {
+const AdminFormMaterial = ({ editables, tiendaAdministrada }) => {
     const [formularioMaterial, setFormularioMaterial] = useState(estadoInicialMaterial);
     const { accionCompletada,
         setAccionCompletada,
@@ -52,7 +52,7 @@ const AdminFormMaterial = ({ editables }) => {
         }
         else {
             try {
-                const response = await axios.post(`${ENDPIONTS.agregar_material}/${formularioMaterial.tienda}`, formularioMaterial)
+                const response = await axios.post(`${ENDPIONTS.agregar_material}/${tiendaAdministrada ? tiendaAdministrada.id : formularioMaterial.tienda}`, formularioMaterial)
                 setAccionCompletada(true)
                 setShowLoader(false)
                 setRespuesta(response.data)
@@ -115,11 +115,16 @@ const AdminFormMaterial = ({ editables }) => {
                 <div className="material">
                     <div className="datos">
                         <input type='text' placeholder='Agregue un material' name="material" onChange={manejarCambio} value={formularioMaterial.material} required />
-                        <select name="tienda" placeholder="A Tienda" value={formularioMaterial.tienda} onChange={manejarCambio}>
-                            <option value='' disabled>{tiendas.length ? "Escoja una Tienda" : "No existen tiendas"}</option>
-                            {tiendas.length ? <option value='all'>Agregar a todas las tiendas</option> : null}
-                            {tiendas.map(tienda => <option key={tienda.id} value={tienda.id}>{tienda.Nombre}</option>)}
-                        </select>
+                        {tiendaAdministrada
+                            ? <select name="tienda" placeholder="A Tienda" value={tiendaAdministrada.id} onChange={manejarCambio}>
+                                <option value={tiendaAdministrada.id}>{tiendaAdministrada.nombre}</option>
+                            </select>
+                            :
+                            <select name="tienda" placeholder="A Tienda" value={formularioMaterial.tienda} onChange={manejarCambio}>
+                                <option value='' disabled>{tiendas.length ? "Escoja una Tienda" : "No existen tiendas"}</option>
+                                {tiendas.length ? <option value='all'>Agregar a todas las tiendas</option> : null}
+                                {tiendas.map(tienda => <option key={tienda.id} value={tienda.id}>{tienda.Nombre}</option>)}
+                            </select>}
                     </div>
                 </div>
                 <div className="loader-form" style={{ display: showLoader ? "flex" : "none" }}>

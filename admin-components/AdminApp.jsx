@@ -6,7 +6,7 @@ import AdminMain from './AdminMain'
 export default function AdminApp() {
     return (
         <section className="admin-app">
-            <AdminNavbar />
+            <AdminNavbar superadmin={true} />
             <section className="main">
                 <MenuLateral />
                 <AdminMain />

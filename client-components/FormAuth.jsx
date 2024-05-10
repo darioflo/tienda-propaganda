@@ -1,5 +1,7 @@
 import '@/client-components/client-components-styles/FormAuth.css'
 import { useState } from 'react'
+import { ENDPIONTS } from '@/constants/constants'
+import axios from 'axios'
 
 
 const initialStateLogin = {
@@ -21,9 +23,20 @@ function FormAuth({ select }) {
         })
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log(formAuth);
+        if (formAuth.clave !== formAuth.confirmarClave) {
+            alert('Las contraseñas no coinciden')
+            return
+        }
+        try {
+            const response = await axios.post(ENDPIONTS.registrarse, formAuth)
+            console.log(response)
+            window.alert(response.data)
+
+        } catch (error) {
+            console.error(error)
+        }
         handleReset()
     }
 
@@ -61,7 +74,6 @@ function FormAuth({ select }) {
                     onChange={handleChange} />
                 <input type="password"
                     name="confirmarClave"
-                    id='inp-relative'
                     placeholder='Confirmar contraseña'
                     value={formAuth.confirmarClave}
                     onChange={handleChange} />

@@ -8,7 +8,7 @@ import { ENDPIONTS } from '@/constants/constants';
 import AccionCompleta from './AccionCompleta';
 import Loader from './Loader';
 
-const AdminFormInfo = () => {
+const AdminFormInfo = ({ tiendaAdministrada }) => {
     const [formularioInfo, setFormularioInfo] = useState(estadoInicialInfo);
     const { accionCompletada, setAccionCompletada, respuesta, setRespuesta, wasError, setWasError } = useContext(asyncContext)
     const [tiendas, setTiendas] = useState([])
@@ -33,7 +33,15 @@ const AdminFormInfo = () => {
 
     const manejarEnvio = async (e) => {
         e.preventDefault();
-        console.log(formularioInfo);
+        console.log(formularioInfo, tiendaAdministrada.id, tiendaParaEditar);
+
+        if (tiendaAdministrada) {
+            setTiendaParaEditar({
+                ...tiendaParaEditar,
+                id: tiendaAdministrada.id
+            })
+        }
+
         if (mostrarTiendasInfo) {
             try {
                 setShowLoader(true)
@@ -54,7 +62,7 @@ const AdminFormInfo = () => {
         else {
             try {
                 setShowLoader(true)
-                const response = await axios.post(`${ENDPIONTS.agregar_informacion}/${formularioInfo.tienda}`, formularioInfo)
+                const response = await axios.post(`${ENDPIONTS.agregar_informacion}/${tiendaAdministrada ? tiendaAdministrada.id : formularioInfo.tienda}`, formularioInfo)
                 setAccionCompletada(true)
                 setShowLoader(false)
                 setRespuesta(response.data)
@@ -120,6 +128,11 @@ const AdminFormInfo = () => {
             getUnaTienda(formularioInfo.tienda);
             console.log(mostrarTiendasInfo, formularioInfo.tienda);
         }
+
+        else if (mostrarTiendasInfo && tiendaAdministrada) {
+            getUnaTienda(tiendaAdministrada.id);
+            console.log(mostrarTiendasInfo, tiendaAdministrada.id);
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formularioInfo.tienda, mostrarTiendasInfo]);
 
@@ -135,11 +148,15 @@ const AdminFormInfo = () => {
                 </div>
                 <div className="info">
                     <div className="datos">
-                        <select name="tienda" placeholder="A Tienda" value={formularioInfo.tienda} onChange={manejarCambio}>
-                            <option value='' disabled>{tiendas.length ? "Escoja una Tienda" : "No existen tiendas"}</option>
-                            {tiendas.length ? <option value='all'>Agregar a todas las tiendas</option> : null}
-                            {tiendas.map(tienda => <option key={tienda.id} value={tienda.id}>{tienda.Nombre}</option>)}
-                        </select>
+                        {tiendaAdministrada
+                            ? <select name="tienda" placeholder="A Tienda" value={tiendaAdministrada.id} onChange={manejarCambio}>
+                                <option value={tiendaAdministrada.id}>{tiendaAdministrada.nombre}</option>
+                            </select>
+                            : <select name="tienda" placeholder="A Tienda" value={formularioInfo.tienda} onChange={manejarCambio}>
+                                <option value='' disabled>{tiendas.length ? "Escoja una Tienda" : "No existen tiendas"}</option>
+                                {tiendas.length ? <option value='all'>Agregar a todas las tiendas</option> : null}
+                                {tiendas.map(tienda => <option key={tienda.id} value={tienda.id}>{tienda.Nombre}</option>)}
+                            </select>}
                         <div className="datos-input">
                             <input type="text" name='correo' placeholder='Correo' onChange={manejarCambio} value={formularioInfo.correo} required />
                             <input type="text" name='direccion' placeholder='Dirección' onChange={manejarCambio} value={formularioInfo.direccion} required />

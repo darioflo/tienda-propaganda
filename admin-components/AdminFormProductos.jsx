@@ -8,7 +8,7 @@ import { useContext } from 'react';
 import AccionCompleta from './AccionCompleta';
 import Loader from './Loader';
 
-const AdminFormProductos = ({ editables }) => {
+const AdminFormProductos = ({ editables, tiendaAdministrada }) => {
     const [formulario, setFormulario] = useState(estadoInicialProductos);
     const [tiendas, setTiendas] = useState([]);
     const [materiales, setMateriales] = useState([]);
@@ -67,7 +67,7 @@ const AdminFormProductos = ({ editables }) => {
                 setRenderizarProductos(renderizarProductos + 1)
 
             } else {
-                response = await axios.post(`${ENDPIONTS.agregar_producto}/${formulario.tienda}`, datosFormulario, {
+                response = await axios.post(`${ENDPIONTS.agregar_producto}/${tiendaAdministrada ? tiendaAdministrada.id : formulario.tienda}`, datosFormulario, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
@@ -93,7 +93,7 @@ const AdminFormProductos = ({ editables }) => {
     };
     const getTiendas = async () => {
         try {
-            const respuesta = await axios.get(ENDPIONTS.tiendas)
+            const respuesta = await axios.get(tiendaAdministrada ? `https://0m9fgs4l-5000.usw3.devtunnels.ms/shop/shops/${tiendaAdministrada.id}` : ENDPIONTS.tiendas)
             if (respuesta.data.length === 0) {
                 setFormularioMaterial(prevState => ({ ...prevState, tienda: "No hay tiendas" }));
             }
@@ -142,11 +142,14 @@ const AdminFormProductos = ({ editables }) => {
                 categoria: editables.categoria._id,
                 fotos: []
             }));
-            console.log(editables.tienda._id);
-            obtenerMaterialYCategoria(editables.tienda._id);
-        }
 
-    }, [editables]);
+            obtenerMaterialYCategoria(editables.tienda?._id);
+        } else if (tiendaAdministrada) {
+            obtenerMaterialYCategoria(tiendaAdministrada.id);
+        } else if (formulario.tienda) {
+            obtenerMaterialYCategoria(formulario.tienda);
+        }
+    }, [editables, formulario.tienda, tiendaAdministrada]);
 
     useEffect(() => {
         if (formulario.tienda) {
@@ -159,7 +162,12 @@ const AdminFormProductos = ({ editables }) => {
                 obtenerMaterialYCategoria(formulario.tienda);
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formulario.tienda, editables]);
+
+    useEffect(() => {
+        console.log(tiendaAdministrada);
+    }, [tiendaAdministrada])
 
     useEffect(() => {
         if (accionCompletada) {
@@ -181,16 +189,25 @@ const AdminFormProductos = ({ editables }) => {
                 <div className="info">
                     <div className="datos">
                         <input type="text" name="nombre" placeholder="Nombre del producto" value={formulario.nombre} onChange={manejarCambio} required />
-                        <select name="tienda" placeholder="A Tienda" value={formulario.tienda} onChange={manejarCambio}>
-                            <option value='' disabled>{tiendas.length ? "Escoja una Tienda" : "No existen tiendas"}</option>
-                            {tiendas.map(tienda => <option key={tienda.id} value={tienda.id}>{tienda.Nombre}</option>)}
-                        </select>
+                        {tiendaAdministrada
+                            ? <select name="tienda" placeholder="A Tienda" value={tiendaAdministrada.id} onChange={manejarCambio}>
+                                <option value={tiendaAdministrada.id}>{tiendaAdministrada.nombre}</option>
+                            </select>
+                            :
+                            <select name="tienda" placeholder="A Tienda" value={formulario.tienda} onChange={manejarCambio}>
+                                <option value='' disabled>{tiendas.length ? "Escoja una Tienda" : "No existen tiendas"}</option>
+                                {tiendas.map(tienda => <option key={tienda.id} value={tienda.id}>{tienda.Nombre}</option>)}
+                            </select>}
                         <select name="categoria" value={formulario.categoria} onChange={manejarCambio} required>
-                            <option value='' disabled>{tiendas.length ? "Escoja una categoría" : "No existen categorías"}</option>
+                            {tiendaAdministrada
+                                ? <option value='' disabled>Escoja una Categoria</option>
+                                : <option value='' disabled>{tiendas.length ? "Escoja una Categoria" : "No existen categorias"}</option>}
                             {categorias.map((categoria, index) => <option key={index} value={categoria.id}>{categoria.Nombre}</option>)}
                         </select>
                         <select name="material" value={formulario.material} onChange={manejarCambio} required>
-                            <option value='' disabled>{tiendas.length ? "Escoja un Material" : "No existen materiales"}</option>
+                            {tiendaAdministrada
+                                ? <option value='' disabled>Escoja un material</option>
+                                : <option value='' disabled>{tiendas.length ? "Escoja un Material" : "No existen materiales"}</option>}
                             {materiales.map((material, index) => <option key={index} value={material.id}>{material.Nombre}</option>)}
                         </select>
                         <input type="number" step="0.01" name="precio" value={formulario.precio} placeholder="Precio" onChange={manejarCambio} required />

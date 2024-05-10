@@ -9,7 +9,7 @@ import AccionCompleta from './AccionCompleta';
 import { useEffect } from 'react';
 import Loader from './Loader';
 
-const AdminFormCategoria = ({ editables, tiendaAdministrada }) => {
+const AdminFormCategoriaStore = ({ editables }) => {
     const [formularioCategoria, setFormularioCategoria] = useState(estadoInicialCategoria);
     const { accionCompletada,
         setAccionCompletada,
@@ -18,12 +18,10 @@ const AdminFormCategoria = ({ editables, tiendaAdministrada }) => {
         wasError,
         setWasError,
         setRenderizarProductos,
-        renderizarProductos, } = useContext(asyncContext)
+        renderizarProductos,
+        tiendaAdministrada } = useContext(asyncContext)
     const [tiendas, setTiendas] = useState([])
     const [showLoader, setShowLoader] = useState(false)
-
-
-    console.log(tiendaAdministrada);
 
     const manejarCambio = (e) => {
         setFormularioCategoria({
@@ -32,7 +30,6 @@ const AdminFormCategoria = ({ editables, tiendaAdministrada }) => {
         });
     };
 
-    console.log(formularioCategoria);
 
     const manejarEnvio = async (e) => {
         setShowLoader(true)
@@ -60,7 +57,7 @@ const AdminFormCategoria = ({ editables, tiendaAdministrada }) => {
         }
         else {
             try {
-                const response = await axios.post(`${ENDPIONTS.agregar_categoria}/${tiendaAdministrada ? tiendaAdministrada.id : formularioCategoria.tienda}`, formularioCategoria)
+                const response = await axios.post(`${ENDPIONTS.agregar_categoria}/${formularioCategoria.tienda}`, formularioCategoria)
                 console.log(response.data);
                 setAccionCompletada(true)
                 setShowLoader(false)
@@ -124,15 +121,7 @@ const AdminFormCategoria = ({ editables, tiendaAdministrada }) => {
                 <div className="categoria">
                     <div className="datos">
                         <input type='text' name="categoria" placeholder='Agregue una categoría' onChange={manejarCambio} value={formularioCategoria.categoria} required />
-                        {tiendaAdministrada
-                            ? <select name="tienda" placeholder="A Tienda" value={formularioCategoria.tienda} onChange={manejarCambio}>
-                                <option value={tiendaAdministrada.id}>{tiendaAdministrada.nombre}</option>
-                            </select>
-                            : <select name="tienda" placeholder="A Tienda" value={formularioCategoria.tienda} onChange={manejarCambio}>
-                                <option value='' disabled>{tiendas.length ? "Escoja una Tienda" : "No existen tiendas"}</option>
-                                {tiendas.length ? <option value='all'>Agregar a todas las tiendas</option> : null}
-                                {tiendas.map(tienda => <option key={tienda.id} value={tienda.id}>{tienda.Nombre}</option>)}
-                            </select>}
+                        <input type='text' readOnly value={tiendaAdministrada.id}>{tiendaAdministrada.nombre}</input>
                     </div>
                 </div>
                 <div className="loader-form" style={{ display: showLoader ? "flex" : "none" }}>
@@ -144,4 +133,4 @@ const AdminFormCategoria = ({ editables, tiendaAdministrada }) => {
     );
 };
 
-export default AdminFormCategoria;
+export default AdminFormCategoriaStore;

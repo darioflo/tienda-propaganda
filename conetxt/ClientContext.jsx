@@ -7,6 +7,9 @@ export function ClientContextProvider({ children }) {
     const [cartProducts, setCartProducts] = useState([])
     const [idProducto, setIdProducto] = useState('')
     const [hamburguerMenuVisible, setHamburguerMenuVisible] = useState(false)
+    const [idTienda, setIdTienda] = useState('663812185ee653d1b23ec6dd')
+    const [idTiendaAdmin, setIdTiendaAdmin] = useState('')
+    const [estadoCliente, setEstadoCliente] = useState('')
 
     const mostrarMenu = () => {
         setHamburguerMenuVisible(!hamburguerMenuVisible)
@@ -45,6 +48,12 @@ export function ClientContextProvider({ children }) {
         asideMenu,
         showMenuAside,
         cerrarMenuPorFuera,
+        idTienda,
+        setIdTienda,
+        idTiendaAdmin,
+        setIdTiendaAdmin,
+        estadoCliente,
+        setEstadoCliente
     }
 
     return <clientContext.Provider value={data}>{children}</clientContext.Provider>

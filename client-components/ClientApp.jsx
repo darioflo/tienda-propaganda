@@ -8,14 +8,16 @@ import '@/client-components/client-components-styles/ClientApp.css'
 import Slider from "./Slider";
 import ProductsPagination from "./Pagination";
 import Footer from "./Footer";
+import { ENDPIONTS } from "@/constants/constants";
 
-function ClientApp() {
+function ClientApp({ idTienda }) {
     return (
         <div className="app">
             <NavsMenu />
             <Slider />
-            <ProductsPagination title={'Agregados recientemente'} url={'https://fakestoreapi.com/products'} />
-            <ProductsPagination title={'Productos por Categoria'} url={'https://fakestoreapi.com/products'} />
+            <ProductsPagination title={'Agregados recientemente'} url={`${ENDPIONTS.productos_recientes}/${idTienda}`} />
+            <ProductsPagination title={'Productos por Categoria'} url={`${ENDPIONTS.productos_cliente}/${idTienda}`} />
+            <ProductsPagination title={'Productos por Material'} url={`${ENDPIONTS.productos_cliente}/${idTienda}`} />
             <Footer />
         </div>
     )

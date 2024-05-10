@@ -19,6 +19,7 @@ export default function AsyncContext({ children }) {
     const [paraEditarMaterial, setParaEditarMaterial] = useState(false)
     const [mostrarTabla, setMostrarTabla] = useState(false)
     const [renderizarProductos, setRenderizarProductos] = useState(0)
+    const [tiendaAdministrada, setTiendaAdministrada] = useState({})
 
     const borrarFila = async (dato) => {
         console.log(dato)
@@ -55,7 +56,9 @@ export default function AsyncContext({ children }) {
         paraEditarCategoria,
         setParaEditarCategoria,
         paraEditarMaterial,
-        setParaEditarMaterial
+        setParaEditarMaterial,
+        tiendaAdministrada,
+        setTiendaAdministrada
     }
     return <asyncContext.Provider value={data}>{children}</asyncContext.Provider>
 

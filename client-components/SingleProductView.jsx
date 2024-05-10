@@ -9,11 +9,12 @@ import { useContext } from "react";
 import { clientContext } from "@/conetxt/ClientContext";
 import HamburguerMenu from "./HamburguerMenu";
 import { useState } from "react";
+import { ENDPIONTS } from "@/constants/constants";
 
 
 function SingleProductView({ element }) {
     console.log(element);
-    const { hamburguerMenuVisible, ubicacionMenuVisible } = useContext(clientContext);
+    const { hamburguerMenuVisible, ubicacionMenuVisible, idTienda } = useContext(clientContext);
 
     function Estrella({ seleccionada = false, alSeleccionar = f => f }) {
         return <span className="estrellas" onClick={alSeleccionar}>{seleccionada ? '★' : '☆'}</span>;
@@ -42,17 +43,18 @@ function SingleProductView({ element }) {
             {ubicacionMenuVisible && <UbicacionMenu />}
             {hamburguerMenuVisible && <HamburguerMenu />}
             <HeaderBottom />
-            {(!Array.isArray(element)) ?
+            {element.nombre ?
                 <div className="cart-product-box dos">
                     <div className="imagen-box">
-                        <Image className="img-card" src={element.image} alt={element.title} width={100} height={100} />
+                        <Image className="img-card" src={element?.fotos[0]} alt={element.title} width={100} height={100} />
                     </div>
                     <div className="info-cart-product ">
                         <div className="datos-cart-product single-products-datos">
-                            <p className="description-card"><strong>Nombre:</strong> <i>{element.title}</i></p>
-                            <p className="price-card"><strong>Precio:</strong> <i>{element.price}</i></p>
-                            <p className="description-card"><strong>Descripcion:</strong> <i>{element.description}</i></p>
-                            <p className="description-card"><strong>Categoria:</strong> <i>{element.category}</i></p>
+                            <p className="description-card"><strong>Nombre:</strong> <i>{element.nombre}</i></p>
+                            <p className="price-card"><strong>Precio:</strong> <i>{element.precio}</i> CUP</p>
+                            <p className="description-card"><strong>Descripción:</strong> <i>{element.descripcion}</i></p>
+                            <p className="description-card"><strong>Categoría:</strong> <i>{element.categoria}</i></p>
+                            <p className="description-card"><strong>Material:</strong> <i>{element.material}</i></p>
                         </div>
                         <div className="opinion">
                             <CalificacionEstrellas totalStars={5} />
@@ -63,8 +65,8 @@ function SingleProductView({ element }) {
                         </div>
                     </div>
                 </div> : null}
-            <ProductsPagination title={'Agregados recientemente'} url={'https://fakestoreapi.com/products'} />
-            <ProductsPagination title={'Productos por Categoria'} url={'https://fakestoreapi.com/products'} />
+            <ProductsPagination title={'Agregados recientemente'} url={`${ENDPIONTS.productos_cliente}/${idTienda}`} />
+            <ProductsPagination title={'Productos por Categoria'} url={`${ENDPIONTS.productos_cliente}/${idTienda}`} />
             <Footer />
         </section>
     )

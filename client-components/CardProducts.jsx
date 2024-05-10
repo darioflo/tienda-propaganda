@@ -5,6 +5,8 @@ import { useState, useContext } from "react"
 import { PRODUCTOS_CESTA } from "@/constants/constants"
 import { clientContext } from "@/conetxt/ClientContext"
 import { useRouter } from "next/navigation"
+import { ENDPIONTS } from "@/constants/constants"
+
 
 
 
@@ -14,7 +16,7 @@ function CardProducts({ element }) {
     const [pressCart, setPressCart] = useState(false)
     const [pressFav, setPressFav] = useState(false)
     const router = useRouter()
-    const { setIdProducto } = useContext(clientContext)
+    const { setIdProducto, estadoCliente } = useContext(clientContext)
 
 
     const addCant = () => {
@@ -34,7 +36,11 @@ function CardProducts({ element }) {
     }
     const pressButtonCart = (id) => {
         setPressCart(!pressCart);
-        PRODUCTOS_CESTA.push(id)
+        console.log(id);
+        if (estadoCliente !== 'Cliente') {
+            window.alert("Debe crearse un perfil para agregar productos a la cesta")
+            router.push('/usuario')
+        }
 
         console.log(PRODUCTOS_CESTA);
     }
@@ -48,12 +54,14 @@ function CardProducts({ element }) {
     return (
         <div className="card-container" id={element.id} onClick={handleClick}>
             <div className="card-header">
-                <h5 className="card-title">{element.title}</h5>
+                <h5 className="card-title">{element.nombre}</h5>
             </div>
-            <Image className="img-card" src={element.image} alt={element.title} width={100} height={100} />
+            <Image className="img-card" src={element.fotos} alt={element.nombre} width={100} height={100} />
             <div className="info-card">
-                <p className="description-card"><i>Nombre: </i>{element.title}</p>
-                <p className="price-card"><i>Precio: </i><strong>{element.price}</strong></p>
+                <p className="description-card"><i>Descripcion: </i>{element.descripcion}</p>
+                <p className="description-card"><i>Categoria: </i>{element.categoria}</p>
+                <p className="description-card"><i>Material: </i>{element.material}</p>
+                <p className="price-card"><i>Precio: </i><strong>{element.precio} cup</strong></p>
             </div>
             <div className="buttons-card-product">
                 <div className="cant">

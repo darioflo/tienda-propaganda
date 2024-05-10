@@ -1,18 +1,23 @@
 'use client'
 import '@/client-components/client-components-styles/FormLogin.css'
-import { useState } from 'react'
-import { useContext } from 'react'
-import { context } from '@/conetxt/HeaderContext'
+import { useState, useContext } from 'react'
+import Link from 'next/link'
+import axios from 'axios'
+import { ENDPIONTS } from '@/constants/constants'
+import { useRouter } from "next/navigation"
+import { clientContext } from '@/conetxt/ClientContext'
 
 const initialStateLogin = {
-    username: '',
+    user: '',
     password: '',
 }
 
-function FormLogin({ select }) {
+function FormLogin({ select, invitado }) {
 
     const [formLogin, setFormLogin] = useState(initialStateLogin)
     const [showHidePassword, setShowHidePassword] = useState(false)
+    const router = useRouter()
+    const { setIdTiendaAdmin, setEstadoCliente } = useContext(clientContext)
 
     const handleChange = (e) => {
         setFormLogin({
@@ -21,9 +26,27 @@ function FormLogin({ select }) {
         })
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         console.log(formLogin);
+        try {
+            let response = await axios.post(ENDPIONTS.autenticar, formLogin)
+            console.log(response.data);
+
+            if (response.data.role === "Admin") {
+                router.push('/admin')
+                setIdTiendaAdmin(response.data.tienda)
+            }
+            else if (response.data.role === "Cliente") {
+                router.push('/client')
+                setEstadoCliente(response.data.role)
+            }
+            else {
+                router.push('/superadmin')
+            }
+        } catch (error) {
+            window.alert(error.response.data);
+        }
         handleReset()
     }
 
@@ -39,13 +62,13 @@ function FormLogin({ select }) {
     return (
         <form action="" className='form' onSubmit={handleSubmit}>
             <div className="title box">
-                <h2 className='login-h2'>Autenticarse</h2>
+                <h2 className='login-h2'>Iniciar sesión</h2>
             </div>
             <div className="inputs box">
                 <input type="text"
-                    name="username"
+                    name="user"
                     placeholder='Usuario'
-                    value={formLogin.username}
+                    value={formLogin.user}
                     onChange={handleChange} />
                 <input type={showHidePassword ? 'text' : "password"}
                     name="password"
@@ -66,7 +89,15 @@ function FormLogin({ select }) {
             </div>
             <div className="buttons box">
                 <button type='submit'>Entrar</button>
-                <div className="change-form" onClick={select} >No tienes una cuenta. <b>Registrate ahora!!!</b></div>
+                {invitado ?
+                    <div className="change-form" style={{ color: "#007BFF", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <Link href={'/client'} style={{ color: "#007BFF", textDecoration: 'none' }}><strong>Entrar como invitado</strong></Link>
+                    </div>
+                    :
+                    <div className="change-form" onClick={select} style={{ color: "#007BFF", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        Crear perfil
+                    </div>
+                }
                 <button type='button' onClick={handleReset}>Cancelar</button>
             </div>
         </form>
